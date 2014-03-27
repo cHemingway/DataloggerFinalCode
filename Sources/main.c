@@ -68,6 +68,7 @@ int main(void) {
 	struct sockaddr server_sockaddr;
 	int bcast_status;
 	int seg = 0;
+	int connected = 0;
 	
 	/* Setup Hardware */
 	init_hw();
@@ -107,38 +108,66 @@ int main(void) {
 
 	/* Main Loop */
 	while (1) {
-		char server_ipstr[FNET_IP6_ADDR_STR_SIZE];
-		int server_ipstr_len = (sizeof(server_ipstr)/sizeof(server_ipstr[0]));
 		
-		/* Check for broadcast */
-		bcast_status = check_broadcast(bcast_s, &server_sockaddr, 4951);
-		if (bcast_status == 1) {
-			int connect_error;
-			fnet_printf("BCAST: Server bcast received \n");
-			fnet_inet_ntop(server_sockaddr.sa_family, server_sockaddr.sa_data, server_ipstr, server_ipstr_len);
-			fnet_printf("BCAST: Server IP: %s \n",server_ipstr);
-			fnet_printf("BCAST: Server Port: %d \n",FNET_NTOHS(server_sockaddr.sa_port));
+		int recvcount;
+		char channelstr[50];
+		int channelstr_len = (sizeof channelstr) / (sizeof channelstr[0]); 
+		
+		/* CONNECT IF NEEDED */
+		if(!connected) {
+			bcast_status = check_broadcast(bcast_s, &server_sockaddr, 4951);
+			if (bcast_status == 1) {
+				int connect_error;
+				char server_ipstr[FNET_IP6_ADDR_STR_SIZE];
+				int server_ipstr_len = (sizeof(server_ipstr)/sizeof(server_ipstr[0]));
+				
+				fnet_printf("BCAST: Server bcast received \n");
+				fnet_inet_ntop(server_sockaddr.sa_family, server_sockaddr.sa_data, server_ipstr, server_ipstr_len);
+				fnet_printf("BCAST: Server IP: %s \n",server_ipstr);
+				fnet_printf("BCAST: Server Port: %d \n",FNET_NTOHS(server_sockaddr.sa_port));
+				
+				/* Send a hello */
+				connect_error = netprot_hello(&server_s, &server_sockaddr, 2000);
+				if(connect_error == NETPROT_OK) {
+					fnet_printf("HELL0: Server connection established \n");
+					connected = 1; /* Connected */
+				}
+				else if(connect_error == NETPROT_ERR_REMOTE){
+					fnet_printf("HELLO: Server did not respond or responded incorrectly \n");
+				}
+				else {
+					fnet_printf("HELLO: Socket error \n");
+				}
+			}
+			else if (bcast_status == -1) {
+				fnet_printf("BCAST: Error listening for server bcast \n");
+			}
+		}
+		
+		/* PARSE COMMANDS IF CONNECTED */
+		if (connected) {
+			/* Get command if found */
+			recvcount = recv(server_s, channelstr, channelstr_len, 0);/* Poll Socket */
 			
-			/* Send a hello */
-			connect_error = netprot_hello(&server_s, &server_sockaddr, 2000);
-			if(connect_error == NETPROT_OK) {
-				fnet_printf("HELL0: Server connection established \n");
+			/* Parse command: TODO */
+			if (recvcount>0) {
+					/* Null terminate */
+					channelstr[recvcount] = '\0';
+					/* Print over serial port */
+					fnet_printf("Received %s",channelstr);
+					send(server_s, "+OK \r\n", 7, 0);
+					fnet_printf("Responded \n");
 			}
-			else if(connect_error == NETPROT_ERR_REMOTE){
-				fnet_printf("HELLO: Server did not respond or responded incorrectly \n");
+			else if (recvcount==SOCKET_ERROR) {
+				fnet_printf("Server Disconnected \n");
+				netprot_goodbye(&server_s);
+				connected = 0; /* Disconnected */
 			}
-			else {
-				fnet_printf("HELLO: Socket error \n");
-			}
-			/* Close the socket */
-			netprot_goodbye(&server_s); /* Send */
 		}
-		else if (bcast_status == -1) {
-			fnet_printf("BCAST: Error listening for server bcast \n");
-		}
+
 		
 		/* Set 7 segs, 0xff currently */
-		sevenseg_write_segment(seg++, 0xff);
+		sevenseg_write_segment(seg++, (connected) ? (0xff):(0x55));
 		if (seg>3) seg=0;
 		
 		/* Polling services.*/
