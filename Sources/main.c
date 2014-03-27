@@ -14,15 +14,11 @@
 
 
 void init_fnet(void) {
-	static unsigned char stack_heap[FNET_CFG_HEAP_SIZE]; //TODO: Fix so does not cross boundaries!
-	struct fnet_init_params init_params;
-
-	/* Input parameters for FNET stack initialisation */
-	init_params.netheap_ptr = stack_heap;
-	init_params.netheap_size = FNET_CFG_HEAP_SIZE;
-
+	/* Enable FNET interrupts.*/
+	fnet_cpu_irq_enable(0);
+	
 	/* Init FNET stack */
-	if (fnet_init(&init_params) != FNET_ERR) {
+	if (fnet_init_static() != FNET_ERR) {
 		if (fnet_netif_get_default() == FNET_NULL) {
 			fnet_printf("Network interface is not configured \n");
 			while (1)
@@ -82,12 +78,9 @@ int main(void) {
 	/* Clear some screen */
 	fnet_printf("\n\n\n");
 
-	/* Enables interrupts.*/
-	fnet_cpu_irq_enable(0);
-
 	/* Initialise FNET */
 	init_fnet();
-	
+
 	sevenseg_init();
 	
 	/* Wait for Ethernet connection */
