@@ -198,4 +198,6 @@ SECTIONS
   } > m_data2
  
   .ARM.attributes 0 : { *(.ARM.attributes) }
+    /* ====== Definitions used by FNET Application. ======= */
+  __VECTOR_RAM		= ADDR(.interrupts);
 }

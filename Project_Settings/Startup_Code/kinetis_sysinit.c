@@ -22,6 +22,10 @@ extern void __thumb_startup(void);
 }
 #endif
 
+//Added for FNET
+extern void fnet_cpu_isr(); /**** FNET interrupt service routine ****/
+
+
 /**
  **===========================================================================
  **  Default interrupt handler
@@ -154,13 +158,13 @@ void (* const InterruptVector[])() __attribute__ ((section(".vectortable"))) = {
     Default_Handler,
     Default_Handler,
     Default_Handler,
+    fnet_cpu_isr,
     Default_Handler,
     Default_Handler,
     Default_Handler,
     Default_Handler,
     Default_Handler,
-    Default_Handler,
-    Default_Handler,
+    fnet_cpu_isr,
     Default_Handler,
     Default_Handler,
     Default_Handler,
