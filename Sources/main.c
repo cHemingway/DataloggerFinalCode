@@ -7,7 +7,8 @@
 #include "netprot.h"
 #include "sevenseg.h"
 
-#define BCAST_PORT 4950
+#define BCAST_PORT 4950	
+#define DHCP_TRIES 10	/* No of attempts to try and get address by DHCP before giving up */
 
 /* Enable OSCERCLK to PHY */
 void enable_phyclk(void) {
@@ -74,8 +75,6 @@ void init_fnet(void) {
 			;
 	}
 
-	//Wait a bit
-	fnet_timer_delay(FNET_TIMER_TICK_IN_SEC * 2); //2 Sec
 	fnet_printf("Stack Ready \n");
 }
 
@@ -111,7 +110,6 @@ int check_connected(void) {
 
 int main(void) {
 	SOCKET bcast_s, server_s;
-	int connected = 0; 
 	struct sockaddr server_sockaddr;
 	int bcast_status;
 	int seg = 0;
@@ -135,14 +133,13 @@ int main(void) {
 	
 	/* Wait for Ethernet connection */
 	fnet_printf("Waiting for connection \n");
-	while (!connected ) {
-		connected = check_connected();
+	while (!check_connected()) {
 		fnet_timer_delay(FNET_TIMER_TICK_IN_SEC * 1); /* 1 Sec */
 		fnet_printf("."); /* Print some errors */
 	}
 	
 	/* Wait for DHCP server */
-	wait_dhcp(5); 
+	wait_dhcp(DHCP_TRIES);  
 	
 	/* Print current IP address */
 	fnet_printf("Current IP Address:");
