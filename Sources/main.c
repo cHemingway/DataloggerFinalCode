@@ -138,7 +138,7 @@ int main(void) {
 	}
 	
 	/* Wait for DHCP server */
-	//wait_dhcp(5); 
+	wait_dhcp(5); 
 	
 	/* Print current IP address */
 	fnet_printf("Current IP Address:");
