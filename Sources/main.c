@@ -5,6 +5,7 @@
 #include "mcg.h"
 #include "dhcp.h"
 #include "netprot.h"
+#include "sevenseg.h"
 
 #define BCAST_PORT 4950
 
@@ -113,6 +114,7 @@ int main(void) {
 	int connected = 0; 
 	struct sockaddr server_sockaddr;
 	int bcast_status;
+	int seg = 0;
 	
 	/* Setup Hardware */
 	init_hw();
@@ -128,6 +130,8 @@ int main(void) {
 
 	/* Initialise FNET */
 	init_fnet();
+	
+	sevenseg_init();
 	
 	/* Wait for Ethernet connection */
 	fnet_printf("Waiting for connection \n");
@@ -183,6 +187,10 @@ int main(void) {
 		else if (bcast_status == -1) {
 			fnet_printf("BCAST: Error listening for server bcast \n");
 		}
+		
+		/* Set 7 segs, 0xff currently */
+		sevenseg_write_segment(seg++, 0xff);
+		if (seg>3) seg=0;
 		
 		/* Polling services.*/
 		fnet_poll_services();
