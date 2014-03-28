@@ -17,6 +17,33 @@
 #define SEGS_MASK 	(0xf000)
 #define SEGS_POL	1			/* 0 = ON */
 
+char lookup_table[] = {
+
+		0xEB, //0
+		0x28, //1
+		0xB3, //2
+		0xBA, //3
+		0x78, //4
+		0xDA, //5
+		0xDB, //6
+		0xA8, //7
+		0xFB, //8
+		0xF8, //9
+		0x43, //L
+		0xEB, //O
+		0x79, //H
+		0x28, //I
+		0xC3, //C
+		0x04, //DP
+};
+ 
+ 
+//Usage: seg = numtoseg(5) to display "5"
+char numtoseg(int num) {
+     return lookup_table[num];
+}
+
+
 //FIXME: Make this configurable
 static void sevenseg_pinmux(void) {
 	/* Enable segments */
