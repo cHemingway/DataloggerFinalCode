@@ -45,20 +45,14 @@ void sevenseg_init(void) {
 }
 
 void sevenseg_write_segment(int seg, char data) {
-	uint32_t segs_pdor, data_pdor; /* Temp vars to split long expressions */
+	uint32_t data_pdor; /* Temp vars to split long expressions */
 	/* We clear/set all bits within the mask that are not to be set/cleared*/
 	
-	/* SEGMENT */
+	/* CLEAR SEGMENT */
 #if SEGS_POL==1
-	segs_pdor = SEGS_PDOR;
-	segs_pdor &= ~(SEGS_MASK);
-	segs_pdor |=  (SEGS_MASK & (1<<(SEGS_SHIFT+seg)));
-	SEGS_PDOR = segs_pdor;
-#else /* DATA_POL==0 */
-	segs_pdor = SEGS_PDOR;
-	segs_pdor |= (SEGS_MASK);
-	segs_pdor &= ~(SEGS_MASK & (1<<(SEGS_SHIFT+seg));
-	SEGS_PDOR = segs_pdor;
+	SEGS_PDOR &= ~(SEGS_MASK);
+#else 
+	SEGS_PDOR |= (SEGS_MASK);
 #endif
 	
 	/* DATA */
@@ -73,4 +67,12 @@ void sevenseg_write_segment(int seg, char data) {
 	data_pdor &= ~(DATA_MASK & (data<<DATA_SHIFT));
 	DATA_PDOR = data_pdor;
 #endif
+	
+	/* SET SEGMENT */
+#if SEGS_POL==1
+	SEGS_PDOR |=  (SEGS_MASK & (1<<(SEGS_SHIFT+seg)));
+#else 
+	SEGS_PDOR &= ~(SEGS_MASK & (1<<(SEGS_SHIFT+seg));
+#endif
+	
 }
