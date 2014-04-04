@@ -17,8 +17,9 @@
 #define SEGS_MASK 	(0xf000)
 #define SEGS_POL	1			/* 0 = ON */
 
-char lookup_table[] = {
 
+
+static const char lookup_table[] = {
 		0xEB, //0
 		0x28, //1
 		0xB3, //2
@@ -29,13 +30,81 @@ char lookup_table[] = {
 		0xA8, //7
 		0xFB, //8
 		0xF8, //9
-		0x43, //L
+		/*0x43, //L
 		0xEB, //O
 		0x79, //H
 		0x28, //I
 		0xC3, //C
-		0x04, //DP
+		0x04, //DP*/
 };
+
+/* Global to store current segment data */
+static char segs_data[4] = {0x00,0x00,0x00,0x00};
+
+void write7seg(void) {
+	static int seg = 0;
+	sevenseg_write_segment(seg, segs_data[seg]);
+	seg++;
+	if(seg>3) seg=0;
+}
+
+//get data to write to 7seg,
+//aaron duffy
+void set7seg(char segs[4], int DP) {
+	int i;
+	//write all 4 7segs
+	for(i=0; i<4; i++){
+		//if character is a number, get from lookup table	
+		if( ('0' <= segs[i]) && ('9' >= segs[i])){
+			segs_data[i] = lookup_table[segs[i]-'0'];
+		}
+		//if not a number, pick from characters available, or write a '0' if unavailable
+		else{
+			switch(segs[i]){
+			case 'l': 	segs_data[i] = 0x43;
+						break;
+			case 'L': 	segs_data[i] = 0x43;
+						break;
+			case 'o': 	segs_data[i] = 0xEB;
+						break;
+			case 'O': 	segs_data[i] = 0xEB;
+						break;
+			case 'h': 	segs_data[i] = 0x79;
+						break;
+			case 'H': 	segs_data[i] = 0x79;
+						break;
+			case 'i': 	segs_data[i] = 0x28;
+						break;
+			case 'I': 	segs_data[i] = 0x28;
+						break;
+			case 'c': 	segs_data[i] = 0xC3;
+						break;
+			case 'C': 	segs_data[i] = 0xC3;
+						break;
+			default: 	segs_data[i] = 0x00; /*Display Nothing*/
+						break;
+			}
+		}
+		
+		//check for decimal point, if on, write to data for that 7seg
+		if((i == 0) && (DP & DP_0)){
+			segs_data[i] |= 0x04;	
+		}
+		
+		if((i == 1) && (DP & DP_1)){
+			segs_data[i] |= 0x04;	
+		}
+		
+		if((i == 2) && (DP & DP_2)){
+			segs_data[i] |= 0x04;	
+		}
+		
+		if((i == 3) && (DP & DP_3)){
+			segs_data[i] |= 0x04;	
+		}
+		
+	}
+}
  
  
 //Usage: seg = numtoseg(5) to display "5"

@@ -67,11 +67,13 @@ int main(void) {
 	SOCKET bcast_s, server_s;
 	struct sockaddr server_sockaddr;
 	int bcast_status;
-	int seg = 0;
 	int connected = 0;
 	
 	/* Setup Hardware */
 	init_hw();
+	
+	/* Initialise 7 Seg */
+	sevenseg_init();
 	
 	/* Initialise UART */
 	fnet_cpu_serial_init(FNET_CFG_CPU_SERIAL_PORT_DEFAULT, 115200);
@@ -82,7 +84,6 @@ int main(void) {
 	/* Initialise FNET */
 	init_fnet();
 
-	sevenseg_init();
 	
 	/* Wait for Ethernet connection */
 	fnet_printf("Waiting for connection \n");
@@ -92,7 +93,7 @@ int main(void) {
 	}
 	
 	/* Wait for DHCP server */
-	wait_dhcp(DHCP_TRIES);  
+	//wait_dhcp(DHCP_TRIES);  
 	
 	/* Print current IP address */
 	fnet_printf("Current IP Address:");
@@ -166,9 +167,6 @@ int main(void) {
 		}
 
 		
-		/* Set 7 segs, 0xff currently */
-		sevenseg_write_segment(seg++, (connected) ? (0xff):(0x55));
-		if (seg>3) seg=0;
 		
 		/* Polling services.*/
 		fnet_poll_services();
