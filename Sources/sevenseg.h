@@ -13,6 +13,6 @@ void sevenseg_init(void);
 
 void write7seg(void);
 
-void set7seg(char segs[4], int DP);
+void set7seg(const char segs[4], int DP);
 
 #endif /* SEVENSEG_H_ */

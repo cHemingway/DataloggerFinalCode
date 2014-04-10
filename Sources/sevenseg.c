@@ -50,7 +50,7 @@ void write7seg(void) {
 
 //get data to write to 7seg,
 //aaron duffy
-void set7seg(char segs[4], int DP) {
+void set7seg(const char segs[4], int DP) {
 	int i;
 	//write all 4 7segs
 	for(i=0; i<4; i++){
