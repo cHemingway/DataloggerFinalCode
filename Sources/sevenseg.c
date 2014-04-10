@@ -55,7 +55,7 @@ void set7seg(const char segs[4], int DP) {
 	//write all 4 7segs
 	for(i=0; i<4; i++){
 		//if character is a number, get from lookup table	
-		if( ('0' <= segs[i]) && ('9' >= segs[i])){
+		if( ('0' <= segs[i]) && (segs[i] <= '9')){
 			segs_data[i] = lookup_table[segs[i]-'0'];
 		}
 		//if not a number, pick from characters available, or write a '0' if unavailable
