@@ -36,5 +36,8 @@ typedef struct netprot_object_t {
 } netprot_object;
 
 
+int netprot_find_object(const char *name, netprot_object **out);
+int netprot_find_attr(const char *name, netprot_object *object, netprot_param **out);
+int netprot_find_object_attr(const char *objname, const char *paramname, netprot_param **out);
 
 #endif

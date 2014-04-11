@@ -6,60 +6,6 @@
 #include <ctype.h>
 #include <stdio.h>
 
-
-static int find_object(const char *name, netprot_object **out) {
-	int namelen, found = 0, i = 0;
-	/* Check if name is present */
-	if (*name=='\0') {
-		return -1;
-	}
-	/* Search for object */
-	while (found==0) {
-		char *objname = netprot_objects[i].name;
-		/* Check for end of list */
-		if (*objname == '\0') {
-			break;
-		}
-		/* Check name */
-		namelen = strlen(objname);
-		if(!strncmp(objname, name, namelen)) {
-			*out = &netprot_objects[i];
-			found = 1;
-		}
-		i++;
-	}
-
-	/* Return success or failure */
-	return !found;
-}
-
-static int find_attr(const char *name, netprot_object *object, netprot_param **out) {
-	int namelen, found = 0, i = 0;
-	/* Check if name is present */
-	if (*name=='\0') {
-		return -1;
-	}
-	/* Search for parameter */
-	while (found==0) {
-		char *paramname = object->attrs[i].name;
-		/* Check for end of list */
-		if (*paramname == '\0') {
-			break;
-		}
-		/* Check name */
-		namelen = strlen(paramname);
-		if(!strncmp(paramname, name, namelen)) {
-			*out = &(object->attrs[i]);
-			found = 1;
-		}
-		i++;
-	}
-
-	/* Return success or failure */
-	return !found;
-
-}
-
 int netprot_cmd_set(const char *in, char *out, int outlen) {
 	char success[] = "+OK \n";
 	char *ptr, *attrname;
@@ -74,7 +20,7 @@ int netprot_cmd_set(const char *in, char *out, int outlen) {
 	ptr--;
 
 	/* Search for object */
-	err = find_object(ptr, &object);
+	err = netprot_find_object(ptr, &object);
 	if (err) {
 		strcpy(out, "-ERR OBJECT NOT FOUND \r\n");
 		return -1;
@@ -94,7 +40,7 @@ int netprot_cmd_set(const char *in, char *out, int outlen) {
 	}
 
 	/* Search for attribute name */
-	err = find_attr(attrname, object, &attr);
+	err = netprot_find_attr(attrname, object, &attr);
 	if (err) {
 		strcpy(out, "-ERR ATTR NOT FOUND \r\n");
 		return -1;
@@ -140,7 +86,7 @@ int netprot_cmd_get(const char *in, char *out, int outlen) {
 	while(isspace(*ptr)) ptr++;
 
 	/* Search for object */
-	err = find_object(ptr, &object);
+	err = netprot_find_object(ptr, &object);
 	if (err) {
 		strncpy(out, "-ERR OBJECT NOT FOUND \r\n", outlen);
 		out[outlen] = '\0'; /* Null Terminate */
@@ -173,7 +119,7 @@ int netprot_cmd_get(const char *in, char *out, int outlen) {
 	}
 	else {	/* Attribute name given */
 		/* Search for attribute */
-		err = find_attr(ptr, object, &attr);
+		err = netprot_find_attr(ptr, object, &attr);
 		if (err) {
 			strncpy(out, "-ERR ATTR NOT FOUND \r\n", outlen);
 			out[outlen] = '\0'; /* Null Terminate */
