@@ -2,11 +2,15 @@
 
 #include "fnet.h" /* FNET stack */
 
+#include <string.h> /* for STRLEN */
+
 /* Our own headers */
 #include "init.h"
 #include "bcast.h"
 #include "dhcp.h"
 #include "netprot.h"
+#include "netprot_command.h"
+#include "netprot_command_list.h"
 #include "sevenseg.h"
 
 #define BCAST_PORT 4950	
@@ -111,8 +115,11 @@ int main(void) {
 	while (1) {
 		
 		int recvcount;
-		char channelstr[50];
-		int channelstr_len = (sizeof channelstr) / (sizeof channelstr[0]); 
+		char commandstr[100];
+		const int commandstr_len = (sizeof commandstr) / (sizeof commandstr[0]); 
+		char outstr[100]; /* Return value to server */
+		const int outstr_len = (sizeof outstr) / (sizeof outstr[0]);
+		
 		
 		/* CONNECT IF NEEDED */
 		if(!connected) {
@@ -148,16 +155,16 @@ int main(void) {
 		/* PARSE COMMANDS IF CONNECTED */
 		if (connected) {
 			/* Get command if found */
-			recvcount = recv(server_s, channelstr, channelstr_len, 0);/* Poll Socket */
+			recvcount = recv(server_s, commandstr, commandstr_len, 0);/* Poll Socket */
 			
-			/* Parse command: TODO */
+			/* Parse command: TODO, ONLY READ ONE LINE */
 			if (recvcount>0) {
 					/* Null terminate */
-					channelstr[recvcount] = '\0';
-					/* Print over serial port */
-					fnet_printf("Received %s",channelstr);
-					send(server_s, "+OK \r\n", 7, 0);
-					fnet_printf("Responded \n");
+					commandstr[recvcount] = '\0';
+					/* Process Command */
+					netprot_process_command(netprot_default_command_list, commandstr, outstr, outstr_len);
+					/* Send reply */
+					send(server_s, outstr, strlen(outstr), 0);
 			}
 			else if (recvcount==SOCKET_ERROR) {
 				fnet_printf("Server Disconnected \n");
