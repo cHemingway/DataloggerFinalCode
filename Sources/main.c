@@ -11,6 +11,7 @@
 #include "netprot.h"
 #include "netprot_command.h"
 #include "netprot_command_list.h"
+#include "netprot_setget_params.h"
 #include "sevenseg.h"
 
 #define BCAST_PORT 4950	
@@ -78,6 +79,7 @@ int main(void) {
 	
 	/* Initialise 7 Seg */
 	sevenseg_init();
+	set7seg("0000",DP_0|DP_1|DP_2|DP_3);
 	
 	/* Initialise UART */
 	fnet_cpu_serial_init(FNET_CFG_CPU_SERIAL_PORT_DEFAULT, 115200);
@@ -159,12 +161,17 @@ int main(void) {
 			
 			/* Parse command: TODO, ONLY READ ONE LINE */
 			if (recvcount>0) {
+					netprot_param *segname;
 					/* Null terminate */
 					commandstr[recvcount] = '\0';
 					/* Process Command */
 					netprot_process_command(netprot_default_command_list, commandstr, outstr, outstr_len);
 					/* Send reply */
 					send(server_s, outstr, strlen(outstr), 0);
+					
+					/* Temporary: Update Display */
+					netprot_find_object_attr("CHANNEL","NAME", &segname);
+					set7seg(segname->strval,0);
 			}
 			else if (recvcount==SOCKET_ERROR) {
 				fnet_printf("Server Disconnected \n");
@@ -173,7 +180,8 @@ int main(void) {
 			}
 		}
 
-		
+		/* Update 7 Segment */
+		write7seg();
 		
 		/* Polling services.*/
 		fnet_poll_services();

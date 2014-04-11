@@ -17,7 +17,7 @@
 #define SEGS_MASK 	(0xf000)
 #define SEGS_POL	1			/* 0 = ON */
 
-
+void sevenseg_write_segment(int seg, char data);
 
 static const char lookup_table[] = {
 		0xEB, //0
