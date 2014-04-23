@@ -93,6 +93,7 @@ int main(void) {
 	
 	/* Wait for Ethernet connection */
 	fnet_printf("Waiting for connection \n");
+	sevenseg_set("0000",DP_1); /* First dot = waiting for connection */
 	while (!check_connected()) {
 		fnet_timer_delay(FNET_TIMER_TICK_IN_SEC * 1); /* 1 Sec */
 		fnet_printf("."); /* Print some errors */
@@ -106,12 +107,16 @@ int main(void) {
 	print_cur_ip();
 	fnet_printf("\n");
 	
+	sevenseg_set("0000",DP_2); /* Second dot = have IP Address */
+	
 	/* Start UDP receiver */
 	bcast_s = setup_listener(BCAST_PORT);
 	if (bcast_s == -1) {
 		fnet_printf("BCAST: Error, could not initialise port \n");
 		while (1);
 	}
+	
+	sevenseg_set("0000",DP_3); /* Third dot = waiting for UDP */
 
 	/* Main Loop */
 	while (1) {
