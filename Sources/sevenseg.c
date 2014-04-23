@@ -106,11 +106,6 @@ void sevenseg_set(const char segs[4], int DP) {
 	}
 }
  
- 
-//Usage: seg = numtoseg(5) to display "5"
-char numtoseg(int num) {
-     return lookup_table[num];
-}
 
 
 //FIXME: Make this configurable

@@ -7,8 +7,6 @@
 #define DP_2	4
 #define DP_3	8
 
-char numtoseg(int num);
-
 void sevenseg_init(void);
 
 
