@@ -162,10 +162,14 @@ int main(void) {
 			/* Parse command: TODO, ONLY READ ONE LINE */
 			if (recvcount>0) {
 					netprot_param *segname;
+					int err;
 					/* Null terminate */
 					commandstr[recvcount] = '\0';
 					/* Process Command */
-					netprot_process_command(netprot_default_command_list, commandstr, outstr, outstr_len);
+					err = netprot_process_command(netprot_default_command_list, commandstr, outstr, outstr_len);
+					if (err) {
+						fnet_printf("CMD: Error processing command %s", commandstr);
+					}
 					/* Send reply */
 					send(server_s, outstr, strlen(outstr), 0);
 					

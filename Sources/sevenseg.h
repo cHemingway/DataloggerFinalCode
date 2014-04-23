@@ -11,7 +11,6 @@ char numtoseg(int num);
 
 void sevenseg_init(void);
 
-void write7seg(void);
 
 void sevenseg_set(const char segs[4], int DP);
 
