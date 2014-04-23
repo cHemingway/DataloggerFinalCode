@@ -17,6 +17,13 @@
 #define SEGS_MASK 	(0xf000)
 #define SEGS_POL	1			/* 0 = ON */
 
+/* Interrupt Configuration */
+#define ISR_LDVAL    (100000) 		/* Number of cycles per ISR, 50Mhz/100000 = 50Hz */
+#define TIMER_NUMBER (0)			/* Timer channel in PIT to use */
+#define ISR_IRQ 	 (84)			/* ISR IRQ Number */
+#define ISR_BITREG	 (ISR_IRQ/32) 	/* Offset for which group of 32 bits ISR is in */	
+#define ISR_PRIORITY (1)			/* Priority */
+
 void sevenseg_write_segment(int seg, char data);
 
 static const char lookup_table[] = {
@@ -133,6 +140,37 @@ void sevenseg_init(void) {
 	DATA_PDDR |= DATA_MASK;
 	/* Enable output for segments */
 	SEGS_PDDR |= SEGS_MASK;
+	/* Install ISR */
+	sevenseg_isr_install();
+}
+
+void sevenseg_isr(void) {
+	/* Clear PIT Interrupt */
+	PIT_TFLG(TIMER_NUMBER) |= PIT_TFLG_TIF_MASK;
+	/* Update display */
+	write7seg();
+}
+
+void sevenseg_isr_install(void) {
+	
+	/* Install ISR - Already done in kinetis_sysinit */
+	
+	/* Clear Pending ISR */
+	NVIC_ICPR(ISR_BITREG) |= NVIC_ICPR_CLRPEND(ISR_IRQ%32); 
+	/* Enable ISR */
+	NVIC_ISER(ISR_BITREG) |= NVIC_ISER_SETENA(ISR_IRQ%32);
+	/* Set Priority - TODO*/
+	//NVIC_IP(ISR_NUMBER) = 
+	/* Enable module clock */
+	SIM_SCGC6 |= SIM_SCGC6_PIT_MASK;
+	/* Enable PIT (active low) */
+	PIT_MCR &= ~PIT_MCR_MDIS_MASK;
+	/* Load timer */
+	PIT_LDVAL(TIMER_NUMBER) = ISR_LDVAL; 
+	/* Clear PIT Interrupt */
+	PIT_TFLG(TIMER_NUMBER) &= ~PIT_TFLG_TIF_MASK;
+	/* Start timer, enable interrupt */
+	PIT_TCTRL(TIMER_NUMBER) |= PIT_TCTRL_TEN_MASK | PIT_TCTRL_TIE_MASK; 
 }
 
 void sevenseg_write_segment(int seg, char data) {

@@ -185,7 +185,7 @@ int main(void) {
 		}
 
 		/* Update 7 Segment */
-		write7seg();
+		//write7seg();
 		
 		/* Polling services.*/
 		fnet_poll_services();

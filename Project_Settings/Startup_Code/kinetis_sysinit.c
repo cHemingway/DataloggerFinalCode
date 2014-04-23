@@ -25,6 +25,9 @@ extern void __thumb_startup(void);
 //Added for FNET
 extern void fnet_cpu_isr(); /**** FNET interrupt service routine ****/
 
+/* Added for seven seg */
+extern void sevenseg_isr(void);
+
 
 /**
  **===========================================================================
@@ -155,7 +158,7 @@ void (* const InterruptVector[])() __attribute__ ((section(".vectortable"))) = {
     Default_Handler,
     Default_Handler,
     Default_Handler,
-    Default_Handler,
+    sevenseg_isr,
     Default_Handler,
     Default_Handler,
     fnet_cpu_isr,

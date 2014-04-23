@@ -9,7 +9,6 @@
 
 void sevenseg_init(void);
 
-
 void sevenseg_set(const char segs[4], int DP);
 
 #endif /* SEVENSEG_H_ */
