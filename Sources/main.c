@@ -78,8 +78,8 @@ int main(void) {
 	init_hw();
 	
 	/* Initialise 7 Seg */
+	sevenseg_set("0000",DP_0);
 	sevenseg_init();
-	set7seg("0000",DP_0|DP_1|DP_2|DP_3);
 	
 	/* Initialise UART */
 	fnet_cpu_serial_init(FNET_CFG_CPU_SERIAL_PORT_DEFAULT, 115200);
@@ -171,7 +171,7 @@ int main(void) {
 					
 					/* Temporary: Update Display */
 					netprot_find_object_attr("CHANNEL","NAME", &segname);
-					set7seg(segname->strval,0);
+					sevenseg_set(segname->strval,0);
 			}
 			else if (recvcount==SOCKET_ERROR) {
 				fnet_printf("Server Disconnected \n");
