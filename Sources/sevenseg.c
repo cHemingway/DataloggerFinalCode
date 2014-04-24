@@ -20,9 +20,9 @@
 /* Interrupt Configuration */
 #define ISR_LDVAL    (100000) 		/* Number of cycles per ISR, 50Mhz/100000 = 50Hz */
 #define TIMER_NUMBER (0)			/* Timer channel in PIT to use */
-#define ISR_IRQ 	 (84)			/* ISR IRQ Number */
+#define ISR_IRQ 	 (INT_PIT0)			/* ISR IRQ Number */
 #define ISR_BITREG	 (ISR_IRQ/32) 	/* Offset for which group of 32 bits ISR is in */	
-#define ISR_PRIORITY (1)			/* Priority */
+#define ISR_PRIORITY (0x8)			/* Priority = 8, lower than ethernet */
 
 /* Function Prototypes */
 static inline void sevenseg_write_segment(int seg, char data);
@@ -157,12 +157,16 @@ static void sevenseg_isr_install(void) {
 	
 	/* Install ISR - Already done in kinetis_sysinit */
 	
+	/* WARNING: THIS CODE ONLY WORKS BY ACCIDENT, SEE TRIGGER.C
+	 * FOR SOMETHING VALID. ISR_IRQ IS WRONG FOR A START.
+	 */
+	
 	/* Clear Pending ISR */
 	NVIC_ICPR(ISR_BITREG) |= NVIC_ICPR_CLRPEND(ISR_IRQ%32); 
 	/* Enable ISR */
 	NVIC_ISER(ISR_BITREG) |= NVIC_ISER_SETENA(ISR_IRQ%32);
-	/* Set Priority - TODO*/
-	//NVIC_IP(ISR_NUMBER) = 
+	/* Set Priority*/
+	NVIC_IP(ISR_IRQ) = ISR_PRIORITY << 4;
 	/* Enable module clock */
 	SIM_SCGC6 |= SIM_SCGC6_PIT_MASK;
 	/* Enable PIT (active low) */
