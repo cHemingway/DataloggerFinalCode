@@ -204,6 +204,7 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\CommandParser&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\SPI&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\binary_netprot&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\compiler&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu&quot;"/>
