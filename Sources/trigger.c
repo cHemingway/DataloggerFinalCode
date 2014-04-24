@@ -23,12 +23,6 @@
 /* Global function pointer to ISR callback */
 static void (*callback)(void);
 
-
-
-void trigger_init(void) {
-	/* Nothing to do, all in isr_install */
-}
-
 void trigger_isr(void) {
 	/* Clear interrupt flag */
 	TRIGGER_PCR |= PORT_PCR_ISF_MASK;
