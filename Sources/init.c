@@ -1,4 +1,5 @@
 #include "init.h"
+#include "dspi.h"
 #include "mcg.h" /* Freescale code for pll_init */
 #include "derivative.h" /* Headers */
 
@@ -44,5 +45,8 @@ void init_hw(void) {
 	
 	/* Output clock to PHY */
 	enable_phyclk();
+	
+	/* Enable DSPI */
+	dspi_init();
 }
 

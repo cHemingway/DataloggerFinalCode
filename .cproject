@@ -30,6 +30,7 @@
 								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.misc.enable.lstfilename.186095128" name="Enable Assembler Listing" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.misc.enable.lstfilename" value="false" valueType="boolean"/>
 								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths.780970317" name="Include paths (-I)" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\FreescaleCode&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\compiler&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu&quot;"/>
@@ -169,6 +170,7 @@
 								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.misc.enable.lstfilename.36497569" name="Enable Assembler Listing" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.misc.enable.lstfilename" value="false" valueType="boolean"/>
 								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths.2146842379" name="Include paths (-I)" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\FreescaleCode&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\compiler&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu&quot;"/>
@@ -199,7 +201,9 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Headers&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Settings/Startup_Code&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\FreescaleCode&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\CommandParser&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\SPI&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\compiler&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu&quot;"/>
