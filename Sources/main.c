@@ -68,6 +68,20 @@ int check_connected(void) {
 	}
 }
 
+//Temporary home
+void netprot_send_capture(SOCKET s) {
+	static int count = 0;
+	struct netstruct *buf;
+	int nsamples = capture_read(&buf);
+	
+	if (nsamples) { /* We have data to send */
+		/* Append the header: TODO: ADD dt_ns */
+		netprot_header_append(buf, count++, nsamples * sizeof(uint16_t), 0, 0);
+		/* Send the data */
+		send(s, (char*)buf, netprot_header_getsize(buf), 0);
+	}
+}
+
 int main(void) {
 	SOCKET bcast_s, server_s;
 	struct sockaddr server_sockaddr;
@@ -159,11 +173,13 @@ int main(void) {
 			}
 		}
 		
-		/* PARSE COMMANDS IF CONNECTED */
+		
 		if (connected) {
-			/* Get command if found */
-			recvcount = recv(server_s, commandstr, commandstr_len, 0);/* Poll Socket */
+			/* Send data */
+			netprot_send_capture(server_s);
 			
+			/* PARSE COMMANDS IF CONNECTED */
+			recvcount = recv(server_s, commandstr, commandstr_len, 0);/* Poll Socket */
 			/* Parse command: TODO, ONLY READ ONE LINE */
 			if (recvcount>0) {
 					netprot_param *segname;

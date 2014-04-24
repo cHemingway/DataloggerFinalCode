@@ -5,6 +5,9 @@
 #include "stdio.h"
 
 int netprot_cmd_start(const char *in, char *out, int outlen) {
+	/* Setup capture */
+	capture_setup(500);
+	
 	/* Start capture isr */
 	trigger_isr_start(capture_isr);
 	
