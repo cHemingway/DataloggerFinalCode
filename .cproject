@@ -136,7 +136,7 @@
 					</folderInfo>
 					<fileInfo id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.730758056.Project_Settings/Linker_Files/MK60DN512_flash.ld" name="MK60DN512_flash.ld" rcbsApplicability="disable" resourcePath="Project_Settings/Linker_Files/MK60DN512_flash.ld" toolsToInvoke=""/>
 					<sourceEntries>
-						<entry excluding="FreescaleCode|Project_Settings/Linker_Files/MK60DN512_flash.ld" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Project_Settings/Linker_Files/MK60DN512_flash.ld|FreescaleCode" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="FreescaleCode"/>
 					</sourceEntries>
 				</configuration>
@@ -279,7 +279,7 @@
 					</folderInfo>
 					<fileInfo id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.1909431204.Project_Settings/Linker_Files/MK60DN512_ram.ld" name="MK60DN512_ram.ld" rcbsApplicability="disable" resourcePath="Project_Settings/Linker_Files/MK60DN512_ram.ld" toolsToInvoke=""/>
 					<sourceEntries>
-						<entry excluding="FreescaleCode|Project_Settings/Linker_Files/MK60DN512_ram.ld" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Project_Settings/Linker_Files/MK60DN512_ram.ld|FreescaleCode" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="FreescaleCode"/>
 					</sourceEntries>
 				</configuration>
