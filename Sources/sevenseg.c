@@ -24,7 +24,9 @@
 #define ISR_BITREG	 (ISR_IRQ/32) 	/* Offset for which group of 32 bits ISR is in */	
 #define ISR_PRIORITY (1)			/* Priority */
 
-void sevenseg_write_segment(int seg, char data);
+/* Function Prototypes */
+static inline void sevenseg_write_segment(int seg, char data);
+static void sevenseg_isr_install(void);
 
 static const char lookup_table[] = {
 		0xEB, //0
@@ -151,7 +153,7 @@ void sevenseg_isr(void) {
 	write7seg();
 }
 
-void sevenseg_isr_install(void) {
+static void sevenseg_isr_install(void) {
 	
 	/* Install ISR - Already done in kinetis_sysinit */
 	
@@ -173,7 +175,7 @@ void sevenseg_isr_install(void) {
 	PIT_TCTRL(TIMER_NUMBER) |= PIT_TCTRL_TEN_MASK | PIT_TCTRL_TIE_MASK; 
 }
 
-void sevenseg_write_segment(int seg, char data) {
+static inline void sevenseg_write_segment(int seg, char data) {
 	uint32_t data_pdor; /* Temp vars to split long expressions */
 	/* We clear/set all bits within the mask that are not to be set/cleared*/
 	
