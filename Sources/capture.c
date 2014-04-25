@@ -27,6 +27,9 @@ volatile int nsample = 0;
 /* Global for buffer full */
 volatile char buf_full = 0;
 
+/* Global to indicate buffer was not emptied in time */
+volatile char buf_overflow = 0;
+
 /* Global for samples per buffer */
 int samples_per_buffer;
 
@@ -56,8 +59,14 @@ void capture_isr(void) {
 		}
 		/* clear nsample */
 		nsample = 0;
+		/* Check if buffer was emptied in time (buf_full == 0) */
+		if (buf_full) buf_overflow = 1;
 		/* raise flag */
 		buf_full = 1;
+		//DEBUG
+		if (buf_overflow) {
+			fnet_printf("Capture Buffer Overflow! \n");
+		}
 	}
 }
 
