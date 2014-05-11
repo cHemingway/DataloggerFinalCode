@@ -147,6 +147,11 @@ struct fnet_dhcp_params
                                              * assigned to the client IP address.@n
                                              * This parameter is optional and can be set to @c 0.
                                              */
+
+    unsigned long retries_until_link_local; /**< @brief how many discover messages are send
+                                             * before a link local 169.254.x.x ip address is choosen
+                                             * use 0 for endless retries
+                                             */
 };
 
 /**************************************************************************/ /*!
