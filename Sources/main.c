@@ -71,8 +71,8 @@ int main(void) {
 		fnet_printf("."); /* Print some errors */
 	}
 	
-	/* Wait for DHCP server */
-	//wait_dhcp(DHCP_TRIES);  
+	/* Wait for DHCP server, if it fails use link local */
+	wait_dhcp(DHCP_TRIES);  
 	
 	/* Print current IP address */
 	fnet_printf("Current IP Address:");

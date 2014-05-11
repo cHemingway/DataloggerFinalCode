@@ -10,7 +10,7 @@ enum callback_state  {
 
 /* Struct passed to each counter */
 struct callback_params_t {
-	int max_tries;				/* Max number of tries */
+	int max_tries;				/* Max number of tries, 0 for infinate */
 	int cur_try;				/* Current attempt no */
 	enum callback_state state; 	/* Current state */
 };
@@ -22,12 +22,13 @@ static void handler_discover(fnet_netif_desc_t netif, void *param) {
 	
 	/* Print Status */
 	fnet_printf("DHCP: attempt %d/%d \n",callback_param->cur_try, callback_param->max_tries);
+	
 	/* Check if number of tries exceeded */
 	if (callback_param->max_tries == callback_param->cur_try) {
-		callback_param->state = TIMEOUT;
+			callback_param->state = TIMEOUT;
 	}
 	else { /* Increment number of tries */
-		callback_param->cur_try += 1;
+			callback_param->cur_try += 1;
 	}
 }
 
@@ -52,15 +53,19 @@ int wait_dhcp(int tries) {
 	/* Clear params struct */
 	fnet_memset_zero(&dhcp_params, sizeof(struct fnet_dhcp_params));
 	
+	/* Turn on link-local support */
+	dhcp_params.retries_until_link_local = tries;
+	
 	/* Initialise DHCP client */
 	if(fnet_dhcp_init(netif, &dhcp_params) == FNET_ERR) {
 		return -1;
 	}
 	
 	/* Setup param for callbacks */
-	callback_params.max_tries = tries;
+	callback_params.max_tries = tries + 1; /* Add one so we get link local before timeout */
 	callback_params.cur_try = 1;
 	callback_params.state = WAITING;
+	
 	
 	/* Print message */
 	fnet_printf("\nDHCP: Waiting for server \n");
@@ -80,8 +85,8 @@ int wait_dhcp(int tries) {
 		return 0;  /* Success */
 	}
 	else {
-		fnet_printf("DHCP: Failed! \n");
-		fnet_dhcp_release(); /* Stop DHCP */
+		fnet_printf("DHCP: Failed! Using link local address \n");
+		/* Keep DHCP server running in background */
 		return -1; /* Failure */
 	}
 }
