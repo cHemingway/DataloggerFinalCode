@@ -12,7 +12,9 @@
 #include "netprot_command.h"
 #include "netprot_command_list.h"
 #include "netprot_setget_params.h"
+#include "netprot_header.h"
 #include "sevenseg.h"
+#include "capture.h"
 #include "UID.h"
 
 #define BCAST_PORT 4950	
