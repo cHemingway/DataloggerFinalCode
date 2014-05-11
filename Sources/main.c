@@ -13,6 +13,7 @@
 #include "netprot_command_list.h"
 #include "netprot_setget_params.h"
 #include "sevenseg.h"
+#include "UID.h"
 
 #define BCAST_PORT 4950	
 #define DHCP_TRIES 10	/* No of attempts to try and get address by DHCP before giving up */
@@ -68,6 +69,42 @@ int check_connected(void) {
 	}
 }
 
+
+/* Function to set MAC address from uuid connected */
+int set_mac_address(void) {
+	char mac_address[6];
+	char uid_buf[16];
+	/* djb2 hash variables from http://www.cse.yorku.ca/~oz/hash.html*/
+	uint32_t hash = 5381;
+	int i;
+	/* We only have 1 network, so get_default is fine */
+	fnet_netif_desc_t cur_netif = fnet_netif_get_default();
+	
+	/* Get bits from UUID */
+	UID_tobuf(uid_buf, sizeof(uid_buf));
+	
+	/* First 3 bytes are from FNET "fnet_cpu_config.h"
+	 * Should hopefully not conflict with any other OUIDs.
+	 */
+	mac_address[0] = 0x00;
+	mac_address[1] = 0x04;
+	mac_address[2] = 0x8f;
+	
+	/* Use hash function on UUID as we don't know which bits are random */
+	/* This hash function is "djb2" from http://www.cse.yorku.ca/~oz/hash.html
+	 * hash is uint32_t instead of long to make size explicit.
+	 */
+	for (i = 0; i<(sizeof(uid_buf)/sizeof(uid_buf[0])); i++) {
+		hash = ((hash << 5) + hash) + uid_buf[i]; /* hash * 33 + uid_buf */
+	}
+	
+	/* Add the hash onto the end of the mac address */
+	memcpy(mac_address+3, &hash, 3 * sizeof(char));
+	
+	/* Now set the created MAC address */
+	return fnet_netif_set_hw_addr(cur_netif, (unsigned char*)mac_address, sizeof(mac_address));
+}
+
 //Temporary home
 void netprot_send_capture(SOCKET s) {
 	static int count = 0;
@@ -103,7 +140,9 @@ int main(void) {
 
 	/* Initialise FNET */
 	init_fnet();
-
+	
+	/* Set MAC address */
+	set_mac_address();
 	
 	/* Wait for Ethernet connection */
 	fnet_printf("Waiting for connection \n");

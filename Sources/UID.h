@@ -15,4 +15,16 @@
  */
 int UID_tostr(char *out, int outlen);
 
+
+/* NAME: UID_tobuf
+ * DESCRIPTION: Copies the 128 bit UID register into a 16 byte buffer.
+ * PARAMS:
+ * 		*out: 	 A pointer to the buffer to copy to
+ * 		 outlen: The length of the output buffer, must be >= 16.
+ * RETURNS:
+ * 		0		Success
+ * 	   -1		Failure (outlen < 16)	
+ */
+int UID_tobuf(char *out, int outlen);
+
 #endif /* _UID_H_ */
