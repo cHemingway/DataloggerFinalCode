@@ -1,0 +1,89 @@
+*** org/fnet_stack/services/dhcp/fnet_dhcp.c    Tue Feb 04 22:25:52 2014
+--- new/fnet_stack/services/dhcp/fnet_dhcp.c    Mon May 05 16:47:06 2014
+***************
+*** 1034,1039 ****
+--- 1034,1089 ----
+
+              if(res == FNET_DHCP_ISTIMEOUT)
+              {
++                 if (fnet_dhcp_if.in_params.retries_until_link_local>0)
++                 {
++                   fnet_dhcp_if.in_params.retries_until_link_local--;
++ 
++                   if (fnet_dhcp_if.in_params.retries_until_link_local==0)
++                   {
++                     //
++                     // choose a ip address based on the mac address
++                     // see http://www.zeroconf.org/QDIPv4LL.html
++                     // see http://www.ietf.org/rfc/rfc3927.txt
++                     //
++                     // this is similar to "case FNET_DHCP_STATE_REQUESTING:"
++                     options.private_options.message_type = FNET_DHCP_OPTION_TYPE_ACK;
++ 
++                     // we have to create a ip address between 169.254.1.0 and 169.254.254.255
++                     res = dhcp->macaddr[0]+dhcp->macaddr[1]+dhcp->macaddr[2]+dhcp->macaddr[3]+dhcp->macaddr[4]+dhcp->macaddr[5];
++                     res &=~ 0xFFFF0000;
++                     if ((res & 0x0000FF00) == 0)
++                       res += 0x00000100;
++                     if ((res & 0x0000FF00) == 0xFF00)
++                       res -= 0x00000100;
++                     res |= 169 << 24;
++                     res |= 254 << 16;
++                     options.public_options.ip_address.s_addr = FNET_HTONL(res);
++                     options.public_options.dhcp_server.s_addr = 0;
++                     options.public_options.netmask.s_addr = FNET_HTONL(0xffff0000);
++                     #if FNET_CFG_DHCP_BROADCAST
++                       options.public_options.broadcast.s_addr = FNET_HTONL(0xffff0000);
++                     #endif
++                     #if FNET_CFG_DNS
++                       options.public_options.dns.s_addr = 0;
++                     #endif
++                     options.public_options.gateway.s_addr = 0;
++                     options.public_options.lease_time = FNET_HTONL(FNET_DHCP_LEASE_INFINITY);
++                     options.public_options.t1 = FNET_HTONL(FNET_DHCP_LEASE_INFINITY);
++                     options.public_options.t2 = FNET_HTONL(FNET_DHCP_LEASE_INFINITY);
++ 
++                     dhcp->lease_obtained_time = fnet_timer_ticks(); /* save lease obtained time.*/
++ 
++                     fnet_dhcp_print_options(&options);
++ 
++                     /* Apply parameters. */
++                     dhcp->current_options = options;
++ 
++                     fnet_dhcp_apply_params(dhcp);
++ 
++                     break;
++                   }
++                 }
++ 
+                  fnet_dhcp_change_state(dhcp, FNET_DHCP_STATE_INIT); /* => INIT */
+              }
+
+***************
+*** 1239,1244 ****
+--- 1289,1295 ----
+
+      if(params)
+      {
++         fnet_dhcp_if.in_params.retries_until_link_local = params->retries_until_link_local;
+          fnet_dhcp_if.in_params.requested_ip_address = params->requested_ip_address;
+
+      #if !FNET_CFG_DHCP_BOOTP  /* DHCP */
+
+*** org/fnet_stack/services/dhcp/fnet_dhcp.h    Tue Feb 04 22:25:52 2014
+--- new/fnet_stack/services/dhcp/fnet_dhcp.h    Mon May 05 16:40:02 2014
+***************
+*** 147,152 ****
+--- 147,157 ----
+                                               * assigned to the client IP address.@n
+                                               * This parameter is optional and can be set to @c 0.
+                                               */
++ 
++     unsigned long retries_until_link_local; /**< @brief how many discover messages are send
++                                              * before a link local 169.254.x.x ip address is choosen
++                                              * use 0 for endless retries
++                                              */
+  };
+
+  /**************************************************************************/ /*!
+  
