@@ -4,7 +4,7 @@
 #include <fnet.h>
 
 
-/* NAME: setup_listener
+/* NAME: bcast_setup_listener
  * DESCRIPTION: sets up a UDP broadcast listener on port port
  *
  * PARAMS:
@@ -13,10 +13,10 @@
  *			-1	on failure
  *			 s  Socket handle on success
  */
-SOCKET setup_listener(short port);
+SOCKET bcast_setup_listener(short port);
 
 
-/* NAME: parse_broadcast
+/* NAME: bcast_parse_broadcast
  * DESCRIPTION: parses a null-terminated broadcast message into a sock_addr struct.
  * 				note: does not set local port, only remote
  * 				sets port to 0 if not specified.
@@ -28,10 +28,10 @@ SOCKET setup_listener(short port);
  * 			-1 on failure
  * 			 0 on success
  */
-int parse_broadcast(const char bcast_buf[], int bcast_buf_len, struct sockaddr *out);
+int bcast_parse_broadcast(const char bcast_buf[], int bcast_buf_len, struct sockaddr *out);
 
 
-/* NAME: check_broadcast 
+/* NAME: bcast_check_broadcast 
  * DESCRIPTION: checks for a broadcast message on s (setup by setup_listener).
  * PARAMS:
  * 		SOCKET s:				The socket to listen on (from setup_listener)
@@ -42,7 +42,7 @@ int parse_broadcast(const char bcast_buf[], int bcast_buf_len, struct sockaddr *
  * 			0  on no data recieved
  * 			1  on success
  */
-int check_broadcast(SOCKET s, struct sockaddr *out, int default_port);
+int bcast_check_broadcast(SOCKET s, struct sockaddr *out, int default_port);
 
 /* __BCAST_H__ */
 #endif

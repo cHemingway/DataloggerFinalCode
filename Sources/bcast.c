@@ -5,7 +5,7 @@
 
 #define MCAST_MAXSIZE sizeof("IP=abcd:abcd:abcd:abcd:abcd:abcd:abcd:abcd PORT=xxxxx\r\n") 
 
-SOCKET setup_listener(short port) {
+SOCKET bcast_setup_listener(short port) {
 	int err;
 	SOCKET s;
 	struct sockaddr_in socket_addr;
@@ -94,7 +94,7 @@ static int extract_string(const char in[], const char prefix[], char out[], int 
 }
 
 
-int parse_broadcast(const char bcast_buf[], int bcast_buf_len, struct sockaddr *out)
+int bcast_parse_broadcast(const char bcast_buf[], int bcast_buf_len, struct sockaddr *out)
 {
 	char ipstr[FNET_IP6_ADDR_STR_SIZE];
 	char portstr[sizeof("xxxxx")]; /* Max value of port is 65536 (2^16) */
@@ -130,7 +130,7 @@ int parse_broadcast(const char bcast_buf[], int bcast_buf_len, struct sockaddr *
 }
 
 
-int check_broadcast(SOCKET s, struct sockaddr *out, int default_port) {
+int bcast_check_broadcast(SOCKET s, struct sockaddr *out, int default_port) {
 	char recv_buf[(MCAST_MAXSIZE+1)]; /* Received data, extra space for null termination */
 	int recv_buf_len = sizeof(recv_buf)/sizeof(recv_buf[0]);
 	int recv_len;
@@ -154,7 +154,7 @@ int check_broadcast(SOCKET s, struct sockaddr *out, int default_port) {
 	recv_buf[recv_len] = '\0';
 	
 	/* Now parse */
-	err = parse_broadcast(recv_buf, recv_len, out);
+	err = bcast_parse_broadcast(recv_buf, recv_len, out);
 	if (err) {
 		return -1;
 	}

@@ -40,4 +40,32 @@ int netprot_hello(SOCKET *s, struct sockaddr *server_sockaddr, int timeout);
  */
 int netprot_goodbye(SOCKET *s);
 
+/* NAME: netprot_get_commands
+ * DESCRIPTION: Gets and applies commands from server
+ * PARAMS:
+ *		SOCKET s: 	A connected socket to the server 		
+ */
+int netprot_get_commands(SOCKET s);
+
+/* NAME: netprot_connect
+ * DESCRIPTION: Checks for broadcasts on bcast_s and connects server_s if found;
+ * PARAMS:
+ * 		SOCKET bcast_s:	 	A connected socket to listen for broadcasts on
+ * 		SOCKET *server_s:	The socket to connect
+ * RETURNS:
+ * 		1 if connected
+ * 		0 if no connection
+ */
+int netprot_connect(SOCKET bcast_s, SOCKET *server_s);
+
+/* NAME: netprot_send_capture
+ * DESCRIPTION: Sends captured data to the server
+ * PARAMS:
+ * 		SOCKET s:	A connected socket to the server
+ * RETURNS:
+ * 		-1:			On socket error (disconnect)
+ * 		0:			On success
+ */
+int netprot_send_capture(SOCKET s);
+
 #endif /* _NETPROT_H_ */
