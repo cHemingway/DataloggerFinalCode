@@ -24,17 +24,37 @@
 #define DHCP_TRIES 10	/* No of attempts to try and get address by DHCP before giving up */
 
 
-//Temporary home
-void netprot_send_capture(SOCKET s) {
+/* NAME: netprot_send_capture
+ * DESCRIPTION: Sends captured data to the server
+ * PARAMS:
+ * 		SOCKET s:	A connected socket to the server
+ * RETURNS:
+ * 		-1:			On socket error (disconnect)
+ * 		0:			On success
+ */
+int netprot_send_capture(SOCKET s) {
 	static int count = 0;
 	struct netstruct *buf;
 	int nsamples = capture_read(&buf);
+	int n, sent, tosend;
 	
 	if (nsamples) { /* We have data to send */
 		/* Append the header: TODO: ADD dt_ns */
 		netprot_header_append(buf, count++, nsamples * sizeof(uint16_t), 0, 0);
 		/* Send the data */
-		send(s, (char*)buf, netprot_header_getsize(buf), 0);
+		tosend = netprot_header_getsize(buf);
+		while (tosend>0) { /* Loop until all data is sent */
+			n = send(s, (char*)buf+sent, tosend, 0);
+			if (n == SOCKET_ERROR) {
+				return -1;
+			}
+			sent += n;
+			tosend -= sent;
+		}
+	}
+	/* Success */
+	return 0;
+}
 	}
 }
 
