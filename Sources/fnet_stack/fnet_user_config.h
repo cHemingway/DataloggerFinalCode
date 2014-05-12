@@ -121,14 +121,16 @@
 /*****************************************************************************
  * HTTP Server service support.
  ******************************************************************************/
-#define FNET_CFG_HTTP                       (1)
-#define FNET_CFG_HTTP_AUTHENTICATION_BASIC  (1) /* Enable HTTP authentication.*/
-#define FNET_CFG_HTTP_POST                  (1) /* Enable HTTP POST-method support.*/
+/* Customise: Disable HTTP */
+#define FNET_CFG_HTTP                       (0)
+#define FNET_CFG_HTTP_AUTHENTICATION_BASIC  (0) 
+#define FNET_CFG_HTTP_POST                  (0) 
 
 /*****************************************************************************
  * Telnet Server service support.
  ******************************************************************************/
-#define FNET_CFG_TELNET                     (1)
+/* Customise: Disable telnet */
+#define FNET_CFG_TELNET                     (0)
 
 /*****************************************************************************
  * Flash Module driver support.
@@ -138,12 +140,13 @@
 /*****************************************************************************
  * DNS client/resolver service support.
  ******************************************************************************/
+/* Customise: Disable DNS */
 #ifdef RAM_TARGET /* Just to save RAM */
 #define FNET_CFG_DNS                    (0)
 #define FNET_CFG_DNS_RESOLVER           (0)
 #else
-#define FNET_CFG_DNS                    (1)
-#define FNET_CFG_DNS_RESOLVER           (1)
+#define FNET_CFG_DNS                    (0)
+#define FNET_CFG_DNS_RESOLVER           (0)
 #endif
 
 /*****************************************************************************
