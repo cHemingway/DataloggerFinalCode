@@ -3,6 +3,8 @@
 #include "mcg.h" /* Freescale code for pll_init */
 #include "derivative.h" /* Headers */
 
+#include "config.h" /* Configuration for choosing peripherals to enable/disable */
+
 /* Function outputs OSCERCLK (should be 50Mhz) to PHY */
 static void enable_phyclk(void) {
 	/* Enable OSCERCLK0 */
@@ -48,5 +50,6 @@ void init_hw(void) {
 	
 	/* Enable DSPI */
 	dspi_init();
+	
 }
 

@@ -171,6 +171,8 @@
 								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths.2146842379" name="Include paths (-I)" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\FreescaleCode&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\binary_netprot&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\compiler&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu&quot;"/>
@@ -203,7 +205,7 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\FreescaleCode&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\CommandParser&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\SPI&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\drivers&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\binary_netprot&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\compiler&quot;"/>
@@ -245,6 +247,110 @@
 									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_GCC_Support/ewl/lib/armv7e-m&quot;"/>
 								</option>
 								<option id="org.eclipse.cdt.cross.arm.gnu.c.link.option.scriptfile.93341221" name="Script file (-T)" superClass="org.eclipse.cdt.cross.arm.gnu.c.link.option.scriptfile" value="${ProjDirPath}/Project_Settings/Linker_Files/MK60DN512_flash.ld" valueType="string"/>
+								<option id="org.eclipse.cdt.cross.arm.gnu.c.link.option.linkorder.137592677" superClass="org.eclipse.cdt.cross.arm.gnu.c.link.option.linkorder" valueType="stringList">
+									<listOptionValue builtIn="false" value="FreescaleCode/mcg.c"/>
+									<listOptionValue builtIn="false" value="Project_Settings/Startup_Code/__arm_end.c"/>
+									<listOptionValue builtIn="false" value="Project_Settings/Startup_Code/__arm_start.c"/>
+									<listOptionValue builtIn="false" value="Project_Settings/Startup_Code/kinetis_sysinit.c"/>
+									<listOptionValue builtIn="false" value="Sources/CommandParser/netprot_command.c"/>
+									<listOptionValue builtIn="false" value="Sources/CommandParser/netprot_commands_misc.c"/>
+									<listOptionValue builtIn="false" value="Sources/CommandParser/netprot_commands_setget.c"/>
+									<listOptionValue builtIn="false" value="Sources/CommandParser/netprot_commands_startstop.c"/>
+									<listOptionValue builtIn="false" value="Sources/CommandParser/netprot_params_setget_list.c"/>
+									<listOptionValue builtIn="false" value="Sources/CommandParser/netprot_setget_params.c"/>
+									<listOptionValue builtIn="false" value="Sources/CommandParser/parse_assignment.c"/>
+									<listOptionValue builtIn="false" value="Sources/bcast.c"/>
+									<listOptionValue builtIn="false" value="Sources/binary_netprot/netprot_header.c"/>
+									<listOptionValue builtIn="false" value="Sources/capture.c"/>
+									<listOptionValue builtIn="false" value="Sources/dhcp.c"/>
+									<listOptionValue builtIn="false" value="Sources/drivers/UID.c"/>
+									<listOptionValue builtIn="false" value="Sources/drivers/dspi.c"/>
+									<listOptionValue builtIn="false" value="Sources/drivers/init.c"/>
+									<listOptionValue builtIn="false" value="Sources/drivers/sevenseg.c"/>
+									<listOptionValue builtIn="false" value="Sources/drivers/trigger.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/common/fnet_fec.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/fnet_cpu.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mcf/fnet_mcf.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mcf/fnet_mcf_cache.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mcf/fnet_mcf_checksum.S"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mcf/fnet_mcf_eth.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mcf/fnet_mcf_flash.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mcf/fnet_mcf_isr.S"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mcf/fnet_mcf_isr_inst.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mcf/fnet_mcf_low.S"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mcf/fnet_mcf_serial.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mcf/fnet_mcf_stdlib.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mcf/fnet_mcf_timer.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mk/fnet_mk.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mk/fnet_mk_cache.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mk/fnet_mk_eth.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mk/fnet_mk_flash.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mk/fnet_mk_isr.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mk/fnet_mk_isr_inst.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mk/fnet_mk_low.S"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mk/fnet_mk_serial.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mk/fnet_mk_stdlib.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mk/fnet_mk_timer.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mpc/fnet_mpc.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mpc/fnet_mpc_cache.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mpc/fnet_mpc_eth.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mpc/fnet_mpc_isr.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mpc/fnet_mpc_isr_inst.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mpc/fnet_mpc_serial.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mpc/fnet_mpc_stdlib.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/cpu/mpc/fnet_mpc_timer.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/os/brtos/fnet_brtos.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/os/freertos/fnet_freertos.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/os/ucosIII/fnet_ucosIII.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/os/ucosIII/fnet_ucosIII_isr.S"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/dhcp/fnet_dhcp.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/dns/fnet_dns.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/flash/fnet_flash.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/fs/fnet_fs.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/fs/fnet_fs_rom.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/fs/fnet_fs_root.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/http/fnet_http.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/http/fnet_http_auth.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/http/fnet_http_cgi.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/http/fnet_http_get.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/http/fnet_http_post.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/http/fnet_http_ssi.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/ping/fnet_ping.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/poll/fnet_poll.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/serial/fnet_serial.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/shell/fnet_shell.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/telnet/fnet_telnet.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/tftp/fnet_tftp_cln.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/services/tftp/fnet_tftp_srv.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_arp.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_checksum.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_error.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_eth.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_icmp.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_icmp6.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_igmp.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_inet.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_ip.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_ip6.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_isr.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_loop.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_mempool.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_mld.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_nd6.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_netbuf.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_netif.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_prot.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_raw.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_socket.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_stack.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_stdlib.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_tcp.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_timer.c"/>
+									<listOptionValue builtIn="false" value="Sources/fnet_stack/stack/fnet_udp.c"/>
+									<listOptionValue builtIn="false" value="Sources/main.c"/>
+									<listOptionValue builtIn="false" value="Sources/main_util_funcs.c"/>
+									<listOptionValue builtIn="false" value="Sources/netprot.c"/>
+								</option>
 								<inputType id="org.eclipse.cdt.cross.arm.gnu.c.linker.input.1676475854" superClass="org.eclipse.cdt.cross.arm.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -278,6 +384,161 @@
 						</toolChain>
 					</folderInfo>
 					<fileInfo id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.1909431204.Project_Settings/Linker_Files/MK60DN512_ram.ld" name="MK60DN512_ram.ld" rcbsApplicability="disable" resourcePath="Project_Settings/Linker_Files/MK60DN512_ram.ld" toolsToInvoke=""/>
+					<folderInfo id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.1909431204.1747539821" name="/" resourcePath="Sources">
+						<toolChain id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.toolchain.debug.2034113119" name="ARM Ltd Windows GCC (G++ Lite)" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.toolchain.debug" unusedChildren="">
+							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.level.535727996.1543990681" name="Debug level" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.level.535727996"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.sharedoption.librarian.307005301.383567828" name="Enable automatic library configurations" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.sharedoption.librarian.307005301"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.other.204308822.2123690095" name="Other debugging flags" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.other.204308822"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.addtools.printsize.2048064732.475863386" name="Print Size" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.addtools.printsize.2048064732"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.level.1125888810" name="Debug level" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.level" value="org.eclipse.cdt.cross.arm.gnu.base.option.debugging.level.max" valueType="enumerated"/>
+							<targetPlatform id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.platform.debug" isAbstract="false" name="Windows Platform" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.platform.debug"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.assembler.debug.1645571414" name="ARM Ltd Windows GCC Assembler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.assembler.debug.438826370">
+								<option id="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths.2022563195" name="Include paths (-I)" superClass="org.eclipse.cdt.cross.arm.gnu.assembler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\FreescaleCode&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\compiler&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu\common&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu\mcf&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu\mk&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\os&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\dhcp&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\dns&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\flash&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\fs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\http&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\poll&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\serial&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\shell&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\telnet&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\tftp&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\ping&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\stack&quot;"/>
+								</option>
+								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.115293329" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input"/>
+							</tool>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.2039228473" name="ARM Ltd Windows GCC C Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.1174325192">
+								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.include.paths.133512043" name="Include paths (-I)" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Headers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Settings/Startup_Code&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\FreescaleCode&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\CommandParser&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\binary_netprot&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\config&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\compiler&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu\common&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu\mcf&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu\mk&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\os&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\dhcp&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\dns&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\flash&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\fs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\http&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\poll&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\serial&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\shell&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\telnet&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\tftp&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\ping&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\stack&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_GCC_Support/ewl/EWL_C/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_GCC_Support/ewl/EWL_Runtime/include&quot;"/>
+								</option>
+								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.29153208" name="ARM Ltd Windows GCC C Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input"/>
+								<inputType id="org.eclipse.cdt.cross.arm.gnu.c.compiler.input.asmSourcePreproc.1770228939" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.input.asmSourcePreproc"/>
+							</tool>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.compiler.debug.1184567793" name="ARM Ltd Windows GCC C++ Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.compiler.debug.1783392984"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.linker.debug.1678097250" name="ARM Ltd Windows GCC C Linker" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.linker.debug.1275957983"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.linker.debug.27316321" name="ARM Ltd Windows GCC C++ Linker" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.linker.debug.573060431"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.archiver.base.627882862" name="ARM Ltd Windows GCC Archiver" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.archiver.base.1515907394"/>
+							<tool id="com.freescale.cdt.cross.arm.gnu.sourcery.windows.elf.disassembler.debug.1899001734" name="ARM Ltd Windows GCC Disassembler" superClass="com.freescale.cdt.cross.arm.gnu.sourcery.windows.elf.disassembler.debug.1457065707"/>
+							<tool id="com.freescale.cdt.cross.arm.gnu.sourcery.windows.elf.preprocessor.debug.353309438" name="ARM Ltd Windows GCC C Preprocessor" superClass="com.freescale.cdt.cross.arm.gnu.sourcery.windows.elf.preprocessor.debug.2065860517">
+								<option id="com.freescale.cdt.cross.arm.gnu.preprocessor.dirs.include.paths.1915276923" name="Include paths (-I)" superClass="com.freescale.cdt.cross.arm.gnu.preprocessor.dirs.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Headers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Settings/Startup_Code&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\config&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_GCC_Support/ewl/EWL_C/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_GCC_Support/ewl/EWL_Runtime/include&quot;"/>
+								</option>
+								<inputType id="com.freescale.cdt.cross.arm.gnu.preprocessor.source.616214980" name="Preprocessor Input" superClass="com.freescale.cdt.cross.arm.gnu.preprocessor.source"/>
+							</tool>
+							<tool id="com.freescale.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.preprocessor.debug.1366373831" name="ARM Ltd Windows GCC C++ Preprocessor" superClass="com.freescale.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.preprocessor.debug.920579683"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.createflash.debug.950962743" name="ARM Ltd Windows GNU Create Flash Image" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.createflash.debug.504063632"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.createlisting.debug.1650021162" name="ARM Ltd Windows GNU Create Listing" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.createlisting.debug.1846160096"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.printsize.debug.1521814820" name="ARM Ltd Windows GNU Print Size" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.printsize.debug.809810595"/>
+						</toolChain>
+					</folderInfo>
+					<folderInfo id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.1909431204.1983167744" name="/" resourcePath="Sources/drivers">
+						<toolChain id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.toolchain.debug.566410461" name="ARM Ltd Windows GCC (G++ Lite)" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.toolchain.debug" unusedChildren="">
+							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.level.535727996.1211880783" name="Debug level" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.level.535727996"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.sharedoption.librarian.307005301.1316528889" name="Enable automatic library configurations" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.toolchain.sharedoption.librarian.307005301"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.other.204308822.359772908" name="Other debugging flags" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.other.204308822"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.addtools.printsize.2048064732.245089955" name="Print Size" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.addtools.printsize.2048064732"/>
+							<option id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.level.1911308245" name="Debug level" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.option.debugging.level" value="org.eclipse.cdt.cross.arm.gnu.base.option.debugging.level.max" valueType="enumerated"/>
+							<targetPlatform id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.platform.debug" isAbstract="false" name="Windows Platform" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.platform.debug"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.assembler.debug.55171435" name="ARM Ltd Windows GCC Assembler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.assembler.debug.438826370">
+								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.523972199" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input"/>
+							</tool>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.1462330499" name="ARM Ltd Windows GCC C Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.1174325192">
+								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.include.paths.147589569" name="Include paths (-I)" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Headers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Settings/Startup_Code&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\FreescaleCode&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\config&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\drivers&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\CommandParser&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\binary_netprot&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\compiler&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu\common&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu\mcf&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\cpu\mk&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\os&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\dhcp&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\dns&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\flash&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\fs&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\http&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\poll&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\serial&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\shell&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\telnet&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\tftp&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\services\ping&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}\Sources\fnet_stack\stack&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_GCC_Support/ewl/EWL_C/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_GCC_Support/ewl/EWL_Runtime/include&quot;"/>
+								</option>
+								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.1220868875" name="ARM Ltd Windows GCC C Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input"/>
+								<inputType id="org.eclipse.cdt.cross.arm.gnu.c.compiler.input.asmSourcePreproc.1781391760" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.input.asmSourcePreproc"/>
+							</tool>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.compiler.debug.573677286" name="ARM Ltd Windows GCC C++ Compiler" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.compiler.debug.1783392984"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.linker.debug.1417594432" name="ARM Ltd Windows GCC C Linker" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.linker.debug.1275957983"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.linker.debug.236709032" name="ARM Ltd Windows GCC C++ Linker" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.linker.debug.573060431"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.archiver.base.382531314" name="ARM Ltd Windows GCC Archiver" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.archiver.base.1515907394"/>
+							<tool id="com.freescale.cdt.cross.arm.gnu.sourcery.windows.elf.disassembler.debug.1491277472" name="ARM Ltd Windows GCC Disassembler" superClass="com.freescale.cdt.cross.arm.gnu.sourcery.windows.elf.disassembler.debug.1457065707"/>
+							<tool id="com.freescale.cdt.cross.arm.gnu.sourcery.windows.elf.preprocessor.debug.170919490" name="ARM Ltd Windows GCC C Preprocessor" superClass="com.freescale.cdt.cross.arm.gnu.sourcery.windows.elf.preprocessor.debug.2065860517">
+								<inputType id="com.freescale.cdt.cross.arm.gnu.preprocessor.source.2026973067" name="Preprocessor Input" superClass="com.freescale.cdt.cross.arm.gnu.preprocessor.source"/>
+							</tool>
+							<tool id="com.freescale.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.preprocessor.debug.703940" name="ARM Ltd Windows GCC C++ Preprocessor" superClass="com.freescale.cdt.cross.arm.gnu.sourcery.windows.elf.cpp.preprocessor.debug.920579683"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.createflash.debug.295780916" name="ARM Ltd Windows GNU Create Flash Image" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.createflash.debug.504063632"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.createlisting.debug.1207976092" name="ARM Ltd Windows GNU Create Listing" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.createlisting.debug.1846160096"/>
+							<tool id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.printsize.debug.2003407643" name="ARM Ltd Windows GNU Print Size" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.printsize.debug.809810595"/>
+						</toolChain>
+					</folderInfo>
 					<sourceEntries>
 						<entry excluding="Project_Settings/Linker_Files/MK60DN512_ram.ld|FreescaleCode" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="FreescaleCode"/>
@@ -291,21 +552,6 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="FinalBoardPHYTest.org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.308170470" name="ARM Cross Target Application" projectType="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf"/>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.730758056;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.730758056.;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.assembler.debug.998968337;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.1598948865">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_CS_GCCWinManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.1909431204;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.1909431204.;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.assembler.debug.438826370;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.332855832">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_CS_GCCWinManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.1909431204;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.1909431204.;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.1174325192;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.32594463">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_CS_GCCWinManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.730758056;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.730758056.;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.1396239926;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.1359054275">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_CS_GCCWinManagedMakePerProjectProfileC"/>
-		</scannerConfigBuildInfo>
-	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.pathentry"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="FLASH">
@@ -314,5 +560,21 @@
 		<configuration configurationName="RAM">
 			<resource resourceType="PROJECT" workspacePath="/FinalBoardPHYTest"/>
 		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.1909431204;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.1909431204.;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.1174325192;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.32594463">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_CS_GCCWinManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.730758056;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.730758056.;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.c.compiler.debug.1396239926;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.1359054275">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_CS_GCCWinManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.1909431204;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.1909431204.;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.assembler.debug.438826370;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.332855832">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_CS_GCCWinManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.730758056;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.debug.730758056.;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.elf.assembler.debug.998968337;org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.1598948865">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.cross.arm.gnu.ARM_CS_GCCWinManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
 	</storageModule>
 </cproject>
