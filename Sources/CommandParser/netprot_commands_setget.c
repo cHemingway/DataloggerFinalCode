@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 int netprot_cmd_set(const char *in, char *out, int outlen) {
-	char success[] = "+OK \n";
+	char success[] = "+OK \r\n";
 	char *ptr, *attrname;
 	netprot_object *object;
 	netprot_param *attr;
