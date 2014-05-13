@@ -12,6 +12,12 @@
 #include "user_config.h"
 
 
+/* Debugging output of netprot */
+#ifndef NETPROT_DEBUG
+#define NETPROT_DEBUG	(0)
+#endif
+
+
 /* UDP port to listen for broadcasts on */
 #ifndef CONFIG_BCAST_PORT
 #define CONFIG_BCAST_PORT 			(4950)	
