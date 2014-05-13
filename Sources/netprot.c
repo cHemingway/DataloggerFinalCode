@@ -101,7 +101,8 @@ int netprot_hello(SOCKET *s, struct sockaddr *server_sockaddr, int timeout) {
 	timeout_ticks = fnet_timer_ms2ticks(timeout); /*TODO: Remove magic number */
 	/* Poll until timeout or OK */
 	while (recvcount==0) { 
-		recvcount = recv(*s, torecv, NETPROT_RESPONSE_SIZE, 0);/* Poll Socket */
+		/* Ensure we only read OK and no more */
+		recvcount = recv(*s, torecv, sizeof("+OK \r\n") -1, 0);/* Poll Socket */
 		NETPROT_SOCKET_ERROR_CHECK(recvcount);
 		if (fnet_timer_get_interval(starttime, fnet_timer_ticks()) > timeout_ticks) {
 					break;
@@ -151,6 +152,7 @@ int netprot_get_commands(SOCKET s) {
 	if (recvcount>0) {
 			
 			int err;
+			
 			/* Null terminate */
 			commandstr[recvcount] = '\0';
 			/* Process Command */
