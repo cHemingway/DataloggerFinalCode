@@ -19,7 +19,6 @@
 
 /* Setup functions for networking */
 #include "main_util_funcs.h"
-
 int main(void) {
 	SOCKET bcast_s, server_s;
 	int connected = 0;
@@ -103,6 +102,7 @@ int main(void) {
 			err = netprot_get_commands(server_s);
 			if (err) {
 				netprot_goodbye(&server_s);
+				sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
 				connected = 0;
 				continue;
 			}
