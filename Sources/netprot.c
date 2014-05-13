@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include "netprot.h"
 #include "netprot_command.h"
 #include "netprot_command_list.h"
@@ -194,7 +196,7 @@ int netprot_connect(SOCKET bcast_s, SOCKET *server_s) {
 		fnet_printf("BCAST: Server Port: %d \n",FNET_NTOHS(server_sockaddr.sa_port));
 		
 		/* Send a hello */
-		connect_error = netprot_hello(server_s, &server_sockaddr, 2000);
+		connect_error = netprot_hello(server_s, &server_sockaddr, CONFIG_TIMEOUT);
 		if(connect_error == NETPROT_OK) {
 			fnet_printf("HELL0: Server connection established \n");
 			connected = 1; /* Connected */

@@ -24,6 +24,11 @@
 #define CONFIG_DHCP_TRIES 			(10)	
 #endif 
 
+/* Timeout for connecting to server after a broadcast message in ms */
+#ifndef CONFIG_TIMEOUT
+#define CONFIG_TIMEOUT				(4000)
+#endif
+
 
 /***** SET OPTIONS BASED ON BOARD TYPE *****/
 
