@@ -63,6 +63,9 @@ int netprot_hello(SOCKET *s, struct sockaddr *server_sockaddr, int timeout) {
 	/* Build command string */
 	snprintf(tosend, NETPROT_HELLO_SIZE-1, NETPROT_HELLO_FORMAT, uid_str);
 	
+	/* Close socket if it already exists */
+	netprot_goodbye(s);
+	
 	/* Create Socket */
 	*s = socket(AF_INET, SOCK_STREAM, 0);
 
