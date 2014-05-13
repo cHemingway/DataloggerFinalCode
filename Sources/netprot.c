@@ -144,7 +144,7 @@ int netprot_get_commands(SOCKET s) {
 	recvcount = recv(s, commandstr, commandstr_len, 0);/* Poll Socket */
 	/* Parse command: TODO, ONLY READ ONE LINE */
 	if (recvcount>0) {
-			netprot_param *segname;
+			
 			int err;
 			/* Null terminate */
 			commandstr[recvcount] = '\0';
@@ -156,10 +156,14 @@ int netprot_get_commands(SOCKET s) {
 			/* Send reply */
 			send(s, outstr, strlen(outstr), 0);
 			
-			/* Temporary: Update Display */
-			netprot_find_object_attr("CHANNEL","NAME", &segname);
-			sevenseg_set(segname->strval,0);
-			
+			/* Update Display if ADC board */
+			#ifdef CONFIG_BOARD_ADC
+			{
+				netprot_param *segname;
+				netprot_find_object_attr("CHANNEL","NAME", &segname);
+				sevenseg_set(segname->strval,0);
+			}
+			#endif
 	}
 	else if (recvcount==SOCKET_ERROR) {
 		fnet_printf("Server Disconnected \n");

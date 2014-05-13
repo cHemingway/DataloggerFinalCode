@@ -4,6 +4,10 @@
 
 #include <string.h> /* for STRLEN */
 
+
+/* Include configuration file */
+#include "config.h"
+
 /* Our own headers */
 #include "init.h"
 #include "bcast.h"
@@ -16,11 +20,6 @@
 /* Setup functions for networking */
 #include "main_util_funcs.h"
 
-
-#define BCAST_PORT 4950	
-#define DHCP_TRIES 10	/* No of attempts to try and get address by DHCP before giving up */
-
-
 int main(void) {
 	SOCKET bcast_s, server_s;
 	int connected = 0;
@@ -28,8 +27,10 @@ int main(void) {
 	/* Setup Hardware */
 	init_hw();
 	
+	//pwm_start();
+	
 	/* Initialise 7 Seg */
-	sevenseg_set("0000",DP_0);
+	sevenseg_set(CONFIG_7SEG_DEFAULT,DP_0);
 	sevenseg_init();
 	
 	/* Initialise UART */
@@ -37,7 +38,11 @@ int main(void) {
 
 	/* Clear some screen */
 	fnet_printf("\n\n\n");
-
+	
+	/* Print board type and firmware version */
+	fnet_printf("Board Type: %s Firmware compiled %s %s \n",
+			CONFIG_BOARD_TYPE_STRING, __TIME__, __DATE__);
+	
 	/* Initialise FNET stack */
 	init_fnet();
 	
@@ -45,31 +50,31 @@ int main(void) {
 	set_mac_address();
 	
 	/* Wait for Ethernet connection */
-	fnet_printf("Waiting for connection \n");
-	sevenseg_set("0000",DP_1); /* First dot = waiting for connection */
+	fnet_printf("Waiting for Connection \n");
+	sevenseg_set(CONFIG_7SEG_DEFAULT,DP_1); /* First dot = waiting for connection */
 	while (!check_connected()) {
 		fnet_timer_delay(FNET_TIMER_TICK_IN_SEC * 1); /* 1 Sec */
 		fnet_printf("."); /* Print some errors */
 	}
 	
 	/* Wait for DHCP server, if it fails use link local */
-	wait_dhcp(DHCP_TRIES);  
+	wait_dhcp(CONFIG_DHCP_TRIES);  
 	
 	/* Print current IP address */
 	fnet_printf("Current IP Address:");
 	print_cur_ip();
 	fnet_printf("\n");
 	
-	sevenseg_set("0000",DP_2); /* Second dot = have IP Address */
+	sevenseg_set(CONFIG_7SEG_DEFAULT,DP_2); /* Second dot = have IP Address */
 	
 	/* Start UDP receiver */
-	bcast_s = setup_listener(BCAST_PORT);
+	bcast_s = bcast_setup_listener(CONFIG_BCAST_PORT);
 	if (bcast_s == -1) {
 		fnet_printf("BCAST: Error, could not initialise port \n");
 		while (1);
 	}
 	
-	sevenseg_set("0000",DP_3); /* Third dot = waiting for UDP */
+	sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
 
 	/* Main Loop */
 	while (1) {
@@ -82,13 +87,15 @@ int main(void) {
 		/* WHEN CONNECTED */
 		if (connected) {
 			int err;
-			/* Send data */
-			err = netprot_send_capture(server_s);
-			if (err) {
-				netprot_goodbye(&server_s);
-				connected = 0;
-				continue;
-			}
+			/* Send data if we are a capture type board */
+			#ifdef CONFIG_BOARD_CAPTURE
+				err = netprot_send_capture(server_s);
+				if (err) {
+					netprot_goodbye(&server_s);
+					connected = 0;
+					continue;
+				}
+			#endif
 			
 			/* Get commands */
 			err = netprot_get_commands(server_s);

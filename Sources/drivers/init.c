@@ -1,5 +1,6 @@
 #include "init.h"
 #include "dspi.h"
+#include "pwm.h"
 #include "mcg.h" /* Freescale code for pll_init */
 #include "derivative.h" /* Headers */
 
@@ -49,7 +50,14 @@ void init_hw(void) {
 	enable_phyclk();
 	
 	/* Enable DSPI */
-	dspi_init();
+	#ifndef CONFIG_ADC_SUPPORT
+		dspi_init();
+	#endif
+		
+	/* Enable PWM */
+	#ifdef CONFIG_PWM_SUPPORT
+		pwm_init();
+	#endif
 	
 }
 
