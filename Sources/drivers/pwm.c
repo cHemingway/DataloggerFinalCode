@@ -3,6 +3,7 @@
 
 /* Code assumes module is FTM0, which is probably will be for foreseeable future */
 /* Also assumes bus clock = 50MHZ */
+#define BUS_CLOCK 		(50000000) 
 
 /* Channel number */
 #define PWM_CHANNEL 	(3)
@@ -71,7 +72,10 @@ void pwm_stop(void) {
 }
 
 void pwm_set(int freq, int width) {
-	/* TODO: Interpret freq and width */
-	FTM0_MOD = 249;
-	PWM_CHAN_V = 25;
+	/* Prescaler is 2, bus clock is set above, -1 as rollover */
+	FTM0_MOD = (BUS_CLOCK)/(2*freq)-1;
+	
+	/* Channel width is in ns, so divide width by period in ns */
+	/* Care must be taken here to avoid overflow */
+	PWM_CHAN_V = width / (1000000000/(BUS_CLOCK/2));
 }
