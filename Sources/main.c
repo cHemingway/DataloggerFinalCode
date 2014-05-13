@@ -87,11 +87,13 @@ int main(void) {
 		/* WHEN CONNECTED */
 		if (connected) {
 			int err;
+			
 			/* Send data if we are a capture type board */
-			#ifdef CONFIG_BOARD_CAPTURE
+			#ifdef CONFIG_CAPTURE_SUPPORT
 				err = netprot_send_capture(server_s);
 				if (err) {
 					netprot_goodbye(&server_s);
+					sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
 					connected = 0;
 					continue;
 				}
