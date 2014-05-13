@@ -159,7 +159,8 @@ int netprot_get_commands(SOCKET s) {
 				fnet_printf("CMD: Error processing command %s", commandstr);
 			}
 			/* Send reply */
-			send(s, outstr, strlen(outstr), 0);
+			err = send(s, outstr, strlen(outstr), 0);
+			NETPROT_SOCKET_ERROR_CHECK(err);
 			
 			/* Update Display if ADC board */
 			#ifdef CONFIG_BOARD_ADC
