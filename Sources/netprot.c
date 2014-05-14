@@ -51,6 +51,42 @@ static int netprot_response_check(char resp[], int resplen) {
 	}
 }
 
+/* NAME: netprot_readline()
+ * DESCRIPTION: Reads (and consume) only one line from a socket.
+ * 				Will not read less than a whole line, even if data available.
+ * PARAMS:
+ * 		SOCKET s:	The socket to read from
+ * 		*line:		A buffer to read into
+ * 		linemaxsize:	The size of the buffer to read into, will not read if too short.
+ * RETURNS:
+ * 		n:		 				Size of the line
+ * 		0:		 				No line to read or linesize < maxlinesize
+ * 		NETPROT_ERR_LOCAL:		On error
+ *  */
+static int netprot_readline(SOCKET s, char *outline, int linemaxsize) {
+	char linebuf[NETPROT_COMMANDSIZE], *newline_pos;
+	int  linebuf_len = (sizeof linebuf) / (sizeof linebuf[0]); 
+	int  n, line_len;
+	
+	/* Peek the whole line to get line position */
+	n = recv(s, linebuf, linebuf_len, MSG_PEEK);
+	NETPROT_SOCKET_ERROR_CHECK(n);
+	
+	/* Find the "/n" character */
+	newline_pos = memchr(linebuf, '\n', n);
+	if (newline_pos == NULL) {
+		return 0;
+	}
+	
+	/* Now properly read the line */
+	line_len = newline_pos - linebuf;
+	n = recv(s, outline, line_len, 0);
+	NETPROT_SOCKET_ERROR_CHECK(n);
+	
+	/* Success */
+	return n;
+}
+
 int netprot_hello(SOCKET *s, struct sockaddr *server_sockaddr, int timeout) {
 	int err;
 	char tosend[NETPROT_HELLO_SIZE];
