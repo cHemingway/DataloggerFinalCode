@@ -8,7 +8,7 @@
 #define USER_CONFIG_H_
 
 #ifndef CONFIG_BOARD
-#define CONFIG_BOARD	(CONFIG_BOARD_PWM)
+#define CONFIG_BOARD	(CONFIG_BOARD_ADC)
 #endif
 
 #endif /* USER_CONFIG_H_ */
