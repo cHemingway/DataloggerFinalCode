@@ -50,12 +50,12 @@ void init_hw(void) {
 	enable_phyclk();
 	
 	/* Enable DSPI */
-	#ifndef CONFIG_ADC_SUPPORT
+	#if CONFIG_ADC_SUPPORT
 		dspi_init();
 	#endif
 		
 	/* Enable PWM */
-	#ifdef CONFIG_PWM_SUPPORT
+	#if CONFIG_PWM_SUPPORT
 		pwm_init();
 	#endif
 	
