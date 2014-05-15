@@ -29,6 +29,8 @@
 } while(0)
 #endif
 
+#define NETPROT_COMMANDSIZE 100
+
 /* Checks if a socket is connected */
 static int netprot_sock_connected(SOCKET s) {
 	fnet_socket_state_t state = SS_UNCONNECTED;
@@ -49,42 +51,6 @@ static int netprot_response_check(char resp[], int resplen) {
 	} else {
 		return -1;
 	}
-}
-
-/* NAME: netprot_readline()
- * DESCRIPTION: Reads (and consume) only one line from a socket.
- * 				Will not read less than a whole line, even if data available.
- * PARAMS:
- * 		SOCKET s:	The socket to read from
- * 		*line:		A buffer to read into
- * 		linemaxsize:	The size of the buffer to read into, will not read if too short.
- * RETURNS:
- * 		n:		 				Size of the line
- * 		0:		 				No line to read or linesize < maxlinesize
- * 		NETPROT_ERR_LOCAL:		On error
- *  */
-static int netprot_readline(SOCKET s, char *outline, int linemaxsize) {
-	char linebuf[NETPROT_COMMANDSIZE], *newline_pos;
-	int  linebuf_len = (sizeof linebuf) / (sizeof linebuf[0]); 
-	int  n, line_len;
-	
-	/* Peek the whole line to get line position */
-	n = recv(s, linebuf, linebuf_len, MSG_PEEK);
-	NETPROT_SOCKET_ERROR_CHECK(n);
-	
-	/* Find the "/n" character */
-	newline_pos = memchr(linebuf, '\n', n);
-	if (newline_pos == NULL) {
-		return 0;
-	}
-	
-	/* Now properly read the line */
-	line_len = newline_pos - linebuf;
-	n = recv(s, outline, line_len, 0);
-	NETPROT_SOCKET_ERROR_CHECK(n);
-	
-	/* Success */
-	return n;
 }
 
 int netprot_hello(SOCKET *s, struct sockaddr *server_sockaddr, int timeout) {
@@ -132,14 +98,14 @@ int netprot_hello(SOCKET *s, struct sockaddr *server_sockaddr, int timeout) {
 	err = send(*s, tosend, strlen(tosend), 0); /*No flags */
 	NETPROT_SOCKET_ERROR_CHECK(err);
 	
+#if NETPROT_HELLO_OK
 	/* Get "+OK" back */
 	starttime = fnet_timer_ticks();
 	timeout_ticks = fnet_timer_ms2ticks(timeout); /*TODO: Remove magic number */
 	/* Poll until timeout or OK */
 	while (recvcount==0) { 
 		/* Ensure we only read OK and no more */
-		recvcount = recv(*s, torecv, sizeof("+OK \r\n") -1, 0);/* Poll Socket */
-		NETPROT_SOCKET_ERROR_CHECK(recvcount);
+		recvcount = netprot_readline(*s, torecv, sizeof(torecv));/* Poll Socket */
 		if (fnet_timer_get_interval(starttime, fnet_timer_ticks()) > timeout_ticks) {
 					break;
 		}
@@ -155,6 +121,7 @@ int netprot_hello(SOCKET *s, struct sockaddr *server_sockaddr, int timeout) {
 	else { /* No Response */
 		return NETPROT_ERR_REMOTE;
 	}
+#endif
 	
 	/* Success */
 	return NETPROT_OK;
@@ -186,19 +153,31 @@ int netprot_get_commands(SOCKET s) {
 	recvcount = recv(s, commandstr, commandstr_len, 0);/* Poll Socket */
 	/* Parse command: TODO, ONLY READ ONE LINE */
 	if (recvcount>0) {
-			
 			int err;
+			char *command;
 			
-			/* Null terminate */
+			/* Null Terminate */
 			commandstr[recvcount] = '\0';
-			/* Process Command */
-			err = netprot_process_command(netprot_default_command_list, commandstr, outstr, outstr_len);
-			if (err) {
-				fnet_printf("CMD: Error processing command %s", commandstr);
+			
+			/* Split into newlines */
+			command = strtok(commandstr, "\r\n");
+			
+			/* Process each command */
+			while (command != NULL) {
+				fnet_printf("CMD: %s", command);
+				
+				/* Process Command */
+				err = netprot_process_command(netprot_default_command_list, command, outstr, outstr_len);
+				if (err) {
+					fnet_printf("CMD: Error processing command %s", command);
+				}
+				/* Send reply */
+				err = send(s, outstr, strlen(outstr), 0);
+				NETPROT_SOCKET_ERROR_CHECK(err);
+				
+				/* Split again */
+				command = strtok(NULL, "\r\n");
 			}
-			/* Send reply */
-			err = send(s, outstr, strlen(outstr), 0);
-			NETPROT_SOCKET_ERROR_CHECK(err);
 			
 			/* Update Display if ADC board */
 			#ifdef CONFIG_BOARD_ADC
@@ -266,9 +245,7 @@ int netprot_send_capture(SOCKET s) {
 		tosend = netprot_header_getsize(buf);
 		while (tosend>0) { /* Loop until all data is sent */
 			n = send(s, (char*)buf+sent, tosend, 0);
-			if (n == SOCKET_ERROR) {
-				return -1;
-			}
+			NETPROT_SOCKET_ERROR_CHECK(n);
 			sent += n;
 			tosend -= sent;
 		}

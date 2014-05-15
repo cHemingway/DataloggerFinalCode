@@ -107,29 +107,31 @@ int main(void) {
 		if (connected) {
 			int err;
 			
+			/* Get commands */
+			err = netprot_get_commands(server_s);
+			if (err) {
+				netprot_goodbye(&server_s);
+				sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
+				fnet_printf("Server Disconnected \n");
+				connected = 0;
+				continue;
+			}
+			
 			/* Send data if we are a capture type board */
 			#ifdef CONFIG_CAPTURE_SUPPORT
 				err = netprot_send_capture(server_s);
 				if (err) {
 					netprot_goodbye(&server_s);
 					sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
+					fnet_printf("Server Disconnected \n");
 					connected = 0;
 					continue;
 				}
 			#endif
-			
-			/* Get commands */
-			err = netprot_get_commands(server_s);
-			if (err) {
-				netprot_goodbye(&server_s);
-				sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
-				connected = 0;
-				continue;
-			}
 		}
 		
 		/* Polling services.*/
-		fnet_poll_services();
+		//fnet_poll_services();
 	}
 	
 	/* Should never end up here */

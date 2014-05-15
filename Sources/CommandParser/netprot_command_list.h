@@ -8,6 +8,7 @@
 #include <stddef.h>
 
 netprot_command netprot_default_command_list[] = {
+	{"+OK", netprot_cmd_ok},
 	{"PING", netprot_cmd_ping},
 	{"SET", netprot_cmd_set},
 	{"GET", netprot_cmd_get},
