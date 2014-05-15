@@ -12,11 +12,15 @@
 #include "user_config.h"
 
 
+/* Hardware test mode, SPI and PWM output enabled always, no network */
+#ifndef CONFIG_TEST_HW
+#define CONFIG_TEST_HW	(0)
+#endif
+
 /* Debugging output of netprot */
 #ifndef NETPROT_DEBUG
 #define NETPROT_DEBUG	(0)
 #endif
-
 
 /* UDP port to listen for broadcasts on */
 #ifndef CONFIG_BCAST_PORT

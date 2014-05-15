@@ -17,6 +17,15 @@
 #include "sevenseg.h"
 #include "capture.h"
 
+
+
+
+#if CONFIG_TEST_HW
+void dspi_read(void) {
+	dspi_no_fifo_3(1);
+}
+#endif
+
 /* Setup functions for networking */
 #include "main_util_funcs.h"
 int main(void) {
@@ -26,7 +35,18 @@ int main(void) {
 	/* Setup Hardware */
 	init_hw();
 	
-	//pwm_start();
+	
+/* Test SPI and PWM */
+#if CONFIG_TEST_HW
+#if CONFIG_BOARD_PWM
+	trigger_isr_start(dspi_read);
+#endif
+#if CONFIG_BOARD_PWM
+	pwm_set(100000, 9500);
+	pwm_start();
+#endif
+	while(1);
+#endif
 	
 	/* Initialise 7 Seg */
 	sevenseg_set(CONFIG_7SEG_DEFAULT,DP_0);
