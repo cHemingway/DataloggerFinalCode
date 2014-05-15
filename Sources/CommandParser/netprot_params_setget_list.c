@@ -52,9 +52,9 @@ netprot_param pwm_attrs[] = {
 		"WIDTH",			/* Name = "WIDTH" */
 		PARAM_INT,			/* Type = Integer */
 		0,					/* Flags = 0 */
-		1000,				/* 1 ns */
+		9500,				/* 0.5us - Inverted */
 		"",					/* No string value */
-		1000,				/* 1 nsz */
+		9500,				/* 0.5us - Inverted */
 		"",					/* No string value */
 	},
 	
