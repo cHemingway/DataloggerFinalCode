@@ -38,11 +38,10 @@ int main(void) {
 	
 /* Test SPI and PWM */
 #if CONFIG_TEST_HW
-#if CONFIG_BOARD_PWM
+#if CONFIG_BOARD == CONFIG_BOARD_ADC
 	trigger_isr_start(dspi_read);
 #endif
-#if CONFIG_BOARD_PWM
-	pwm_set(100000, 9500);
+#if CONFIG_BOARD == CONFIG_BOARD_PWM
 	pwm_start();
 #endif
 	while(1);
