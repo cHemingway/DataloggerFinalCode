@@ -63,10 +63,6 @@ void capture_isr(void) {
 		if (buf_full) buf_overflow = 1;
 		/* raise flag */
 		buf_full = 1;
-		//DEBUG
-		if (buf_overflow) {
-			fnet_printf("Capture Buffer Overflow! \n");
-		}
 	}
 }
 
