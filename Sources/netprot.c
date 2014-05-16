@@ -236,7 +236,7 @@ int netprot_send_capture(SOCKET s) {
 	static int count = 0;
 	struct netstruct *buf;
 	int nsamples = capture_read(&buf);
-	int n, sent, tosend;
+	int n, sent=0, tosend;
 	
 	if (nsamples) { /* We have data to send */
 		/* Append the header: TODO: ADD dt_ns */
@@ -251,5 +251,5 @@ int netprot_send_capture(SOCKET s) {
 		}
 	}
 	/* Success */
-	return 0;
+	return sent;
 }

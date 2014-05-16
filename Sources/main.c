@@ -101,26 +101,17 @@ int main(void) {
 		/* CONNECT IF NEEDED */
 		if(!connected) {
 			connected = netprot_connect(bcast_s, &server_s);
+			fnet_poll_services(); /* Poll DHCP while unconnected */
 		}
 		
 		/* WHEN CONNECTED */
 		if (connected) {
-			int err;
+			int sent = 0, err;
 			
-			/* Get commands */
-			err = netprot_get_commands(server_s);
-			if (err) {
-				netprot_goodbye(&server_s);
-				sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
-				fnet_printf("Server Disconnected \n");
-				connected = 0;
-				continue;
-			}
-			
-			/* Send data if we are a capture type board */
+			/* Send data first if we are a capture type board */
 			#ifdef CONFIG_CAPTURE_SUPPORT
-				err = netprot_send_capture(server_s);
-				if (err) {
+				sent = netprot_send_capture(server_s);
+				if (sent<0) {
 					netprot_goodbye(&server_s);
 					sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
 					fnet_printf("Server Disconnected \n");
@@ -128,10 +119,21 @@ int main(void) {
 					continue;
 				}
 			#endif
+			
+			/* Get commands */
+			if (sent <= 0) { /* We have sent nothing or error */
+				err = netprot_get_commands(server_s);
+				if (err) {
+					netprot_goodbye(&server_s);
+					sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
+					fnet_printf("Server Disconnected \n");
+					connected = 0;
+					continue;
+				}
+			}
+			
 		}
 		
-		/* Polling services.*/
-		//fnet_poll_services();
 	}
 	
 	/* Should never end up here */
