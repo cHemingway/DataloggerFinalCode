@@ -12,7 +12,7 @@
 #define PWM_POLARITY	(1)
 
 #define PWM_DEFAULT_FREQ 	(100000)
-#define PWM_DEFAULT_WIDTH 	(9500)
+#define PWM_DEFAULT_WIDTH 	(3000)
 
 /* Channel registers used */
 #define PWM_CHAN_SC FTM0_CnSC(PWM_CHANNEL)	/* Channel status and control */
