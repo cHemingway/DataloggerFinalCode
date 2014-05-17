@@ -40,6 +40,7 @@ void capture_setup(int n) {
 	nsample = 0;
 	buf_full = 0;
 	cur_buf  = buf0;
+	buf_overflow = 0;
 }
 
 /* Interrupt service routine for capture */
