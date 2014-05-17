@@ -201,6 +201,7 @@ int netprot_get_commands(SOCKET s) {
 int netprot_connect(SOCKET bcast_s, SOCKET *server_s) {
 	int bcast_status, connected = 0;
 	struct sockaddr server_sockaddr;
+	int nodelay = CONFIG_NODELAY;
 	
 	bcast_status = bcast_check_broadcast(bcast_s, &server_sockaddr, 4951);
 	if (bcast_status == 1) {
@@ -217,6 +218,8 @@ int netprot_connect(SOCKET bcast_s, SOCKET *server_s) {
 		connect_error = netprot_hello(server_s, &server_sockaddr, CONFIG_TIMEOUT);
 		if(connect_error == NETPROT_OK) {
 			fnet_printf("HELL0: Server connection established \n");
+			/* Set socket nodelay option */
+			setsockopt(*server_s,  IPPROTO_TCP, TCP_NODELAY, &nodelay, sizeof(nodelay));
 			connected = 1; /* Connected */
 		}
 		else if(connect_error == NETPROT_ERR_REMOTE){

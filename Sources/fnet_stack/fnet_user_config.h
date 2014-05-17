@@ -21,6 +21,9 @@
 //Changed to use UART 0
 #define FNET_CFG_CPU_SERIAL_PORT_DEFAULT    (0) 
 
+//Increase this to try and defeat slow start
+#define FNET_CFG_SOCKET_TCP_TX_BUF_SIZE 20*1024
+
 /*****************************************************************************
  * Enable compiler support.
  ******************************************************************************/
@@ -76,7 +79,7 @@
 #ifdef RAM_TARGET
 #define FNET_CFG_HEAP_SIZE          (22 * 1024)
 #else
-#define FNET_CFG_HEAP_SIZE          (30 * 1024)
+#define FNET_CFG_HEAP_SIZE          (40 * 1024)
 #endif
 
 /*****************************************************************************

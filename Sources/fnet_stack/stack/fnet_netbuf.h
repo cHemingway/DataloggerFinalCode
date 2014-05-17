@@ -109,7 +109,7 @@ fnet_netbuf_t *fnet_netbuf_from_buf( void *data_ptr, int len,int drain );
 fnet_netbuf_t *fnet_netbuf_concat( fnet_netbuf_t *nb1, fnet_netbuf_t *nb2 );
 void fnet_netbuf_to_buf( fnet_netbuf_t *nb, int offset, int len, void *data_ptr );
 fnet_netbuf_t *fnet_netbuf_pullup( fnet_netbuf_t *nb, int len);
-void fnet_netbuf_trim( fnet_netbuf_t ** nb_ptr, int len );
+void fnet_netbuf_trim( fnet_netbuf_t ** nb_ptr, int len ) __attribute__((optimize("-O0")));
 fnet_netbuf_t *fnet_netbuf_cut_center( fnet_netbuf_t ** nb_ptr, int offset, int len);
 void fnet_netbuf_add_chain( fnet_netbuf_t ** nb_ptr, fnet_netbuf_t *nb_chain );
 void fnet_netbuf_del_chain( fnet_netbuf_t ** nb_ptr, fnet_netbuf_t *nb_chain );

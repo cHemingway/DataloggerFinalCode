@@ -34,6 +34,12 @@
 #define CONFIG_DHCP_TRIES 			(10)	
 #endif 
 
+/* Choose if TCP_NODELAY is set as a socket option */
+#ifndef CONFIG_NODELAY
+#define CONFIG_NODELAY				(1)
+#endif
+
+
 /* Timeout for connecting to server after a broadcast message in ms */
 #ifndef CONFIG_TIMEOUT
 #define CONFIG_TIMEOUT				(4000)

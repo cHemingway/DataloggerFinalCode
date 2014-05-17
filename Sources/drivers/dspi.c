@@ -24,7 +24,7 @@ void dspi_init(void) {
 	PORTE_PCR3 |= PORT_PCR_MUX(2); //SPI1_SIN    //PTE3
 }
 
-uint16_t dspi_no_fifo_3(uint32_t master) {
+inline uint16_t dspi_no_fifo_3(uint32_t master) {
 	
 	//master mode, flush rx fifo, flush tx fifo, halt transfer
 	SPI1_MCR = 0x80000C01;
@@ -33,7 +33,7 @@ uint16_t dspi_no_fifo_3(uint32_t master) {
 	SPI1_MCR = 0x81010001;
 
 	//frame size is 16bits, divide fsys by 1024 => fnew ~ 10kHz??
-	SPI1_CTAR0 = 0xfa000001;
+	SPI1_CTAR0 = 0xfa000000;
 
 	//Assert PCS bit 16, put data into master pushr (0x0000), needed for shift regs. errors otherwise.
 	SPI1_PUSHR = 0x00010000;
@@ -52,4 +52,4 @@ uint16_t dspi_no_fifo_3(uint32_t master) {
 
 	//read data from POPR
 	return SPI1_POPR ;
-}
+}  
