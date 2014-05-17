@@ -16,7 +16,7 @@
 #include "netprot_header.h"
 #include "sevenseg.h"
 #include "capture.h"
-
+#include "trigger.h"
 
 
 
@@ -30,7 +30,7 @@ void dspi_read(void) {
 #include "main_util_funcs.h"
 int main(void) {
 	SOCKET bcast_s, server_s;
-	int connected = 0;
+	int connected = 0, disconnect = 0;
 	
 	/* Setup Hardware */
 	init_hw();
@@ -107,14 +107,22 @@ int main(void) {
 		if (connected) {
 			int sent = 0, err;
 			
+			/* Check for disconnection */
+			if (disconnect) {
+				disconnect = 0; /* Reset */
+				//trigger_isr_stop();
+				netprot_goodbye(&server_s);
+				sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
+				fnet_printf("Server Disconnected \n");
+				connected = 0;
+				continue;
+			}
+			
 			/* Send data first if we are a capture type board */
 			#ifdef CONFIG_CAPTURE_SUPPORT
 				sent = netprot_send_capture(server_s);
-				if (sent<0) {
-					netprot_goodbye(&server_s);
-					sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
-					fnet_printf("Server Disconnected \n");
-					connected = 0;
+				if (sent<0) { /* Error - Disconnect */
+					disconnect = 1;
 					continue;
 				}
 			#endif
@@ -122,14 +130,13 @@ int main(void) {
 			/* Get commands */
 			if (sent <= 0) { /* We have sent nothing or error */
 				err = netprot_get_commands(server_s);
-				if (err) {
-					netprot_goodbye(&server_s);
-					sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
-					fnet_printf("Server Disconnected \n");
-					connected = 0;
+				if (err) { /* Error - Disconnect */
+					disconnect = 1;
 					continue;
 				}
 			}
+			
+
 			
 		}
 		
