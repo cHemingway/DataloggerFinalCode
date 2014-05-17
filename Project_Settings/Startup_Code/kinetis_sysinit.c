@@ -67,6 +67,7 @@ void MemManage_Handler() __attribute__ ((weak, alias("Default_Handler")));
 void BusFault_Handler() __attribute__ ((weak, alias("Default_Handler")));
 void UsageFault_Handler() __attribute__ ((weak, alias("Default_Handler")));
 void SVC_Handler() __attribute__ ((weak, alias("Default_Handler")));
+extern void sa_interrupt_handler();
 void DebugMonitor_Handler() __attribute__ ((weak, alias("Default_Handler")));
 void PendSV_Handler() __attribute__ ((weak, alias("Default_Handler")));
 void SysTick_Handler() __attribute__ ((weak, alias("Default_Handler")));
@@ -86,7 +87,7 @@ void (* const InterruptVector[])() __attribute__ ((section(".vectortable"))) = {
     0, 
     0, 
     0, 
-    SVC_Handler, 
+    sa_interrupt_handler,
     DebugMonitor_Handler, 
     0,
     PendSV_Handler, 
