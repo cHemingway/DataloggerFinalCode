@@ -1,0 +1,11 @@
+SA Software tracepoints log file
+ 
+The C:/Users/Chris/codewarrior_workspace/DataloggerMasterCode/Project_Settings/Startup_Code/kinetis_sysinit.c file was updated to add  sa_interrupt_handler for SVC interrupts.
+ 
+The "sa_handler.c" file was added to sa_sources folder. This file contains 
+the interrupt handler for SVC which stops and starts the trace collection.
+ 
+.swtp section was added to LCF file - used by Software Tracepoints mechanism 
+to save tracepoints. Do not change the name of this section.
+ 
+**** Original LCF file was saved in ${ProjDirPath}/sa_backup/ ****

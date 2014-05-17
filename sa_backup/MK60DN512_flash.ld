@@ -24,9 +24,8 @@ MEMORY
   m_interrupts	(rx) : ORIGIN = 0x00000000, LENGTH = 0x1E0
   m_cfmprotrom 	(rx) : ORIGIN = 0x00000400, LENGTH = 0x10
   m_text 		(rx) : ORIGIN = 0x00000800, LENGTH = 512K - 0x800
-  m_data 	   (rwx) : ORIGIN = 0x1FFF0000, LENGTH = 64K					/* Lower SRAM */
-  m_data2	   (rwx) : ORIGIN = 0x20000000+0x400, LENGTH = 64K-0x400		/* Upper SRAM */ 
-  .swtp (RX) : ORIGIN = 0x20000000, LENGTH = 0x400
+  m_data 	   (rwx) : ORIGIN = 0x1FFF0000, LENGTH = 64K				/* Lower SRAM */
+  m_data2	   (rwx) : ORIGIN = 0x20000000, LENGTH = 64K				/* Upper SRAM */
 }
 
 		
@@ -131,18 +130,7 @@ SECTIONS
   } > m_text
 
   /* Initialized data sections goes into RAM, load LMA copy after code */
- 
- 
- .swtp_handler : {
-     . = ALIGN (0x4);
-     PROVIDE ( _swtp_addr = . );
-     KEEP(*(.swtp_table))
-     . = . + 0x200;   /* reserve space for swtp_table */
-     PROVIDE ( _swtp_end = . );
-     . = ALIGN (0x4);
- } > .swtp 
- 
-.data : AT(___ROM_AT)
+  .data : AT(___ROM_AT)
   {
     . = ALIGN(4);
     _sdata = .;        /* create a global symbol at data start */
