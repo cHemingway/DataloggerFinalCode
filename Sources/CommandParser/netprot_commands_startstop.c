@@ -13,7 +13,7 @@ int netprot_cmd_start(const char *in, char *out, int outlen) {
 	/* Choose action based on board type */
 	#if CONFIG_BOARD == CONFIG_BOARD_ADC
 	/* Setup capture */
-	capture_setup(500);
+	capture_setup(CONFIG_SAMPLES_PER_BUFFER);
 	
 	/* Start capture isr */
 	trigger_isr_start(capture_isr);

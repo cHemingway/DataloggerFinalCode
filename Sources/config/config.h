@@ -45,6 +45,19 @@
 #define CONFIG_TIMEOUT				(4000)
 #endif
 
+/* Number of ADC samples to store in each buffer, ensure that this is less than MTU */
+#ifndef CONFIG_SAMPLES_PER_BUFFER
+#define CONFIG_SAMPLES_PER_BUFFER  (500)
+#endif
+
+/* Error Check ADC Samples */
+/* Ethernet MTU (Minus Headers):(1272 Bytes	-
+ * Our Headers: 				28 Bytes)	/
+ * 16bit:						2 bytes		= 	622 samples
+ * */
+#if CONFIG_SAMPLES_PER_BUFFER > 622
+#warning "CONFIG_SAMPLES_PER_BUFFER > 622, Ethernet MTU may be exceeded."
+#endif
 
 /***** SET OPTIONS BASED ON BOARD TYPE *****/
 
