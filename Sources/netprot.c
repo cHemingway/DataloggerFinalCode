@@ -147,13 +147,24 @@ int netprot_get_commands(SOCKET s) {
 			}
 			
 			/* Update Display if ADC board */
-			#ifdef CONFIG_BOARD_ADC
+			#if CONFIG_BOARD == CONFIG_BOARD_ADC
 			{
 				netprot_param *segname;
 				netprot_find_object_attr("CHANNEL","NAME", &segname);
 				sevenseg_set(segname->strval,0);
 			}
 			#endif
+			
+			/* Update PWM if PWM board */
+			#if CONFIG_BOARD == CONFIG_BOARD_PWM
+			{
+				netprot_param *width, *freq;
+				netprot_find_object_attr("PWM","WIDTH",&width);
+				netprot_find_object_attr("PWM","FREQ", &freq);
+				pwm_set(freq->intval, width->intval);
+			}
+			#endif
+			
 	}
 	else if (recvcount==SOCKET_ERROR) {
 		fnet_printf("Server Disconnected \n");
