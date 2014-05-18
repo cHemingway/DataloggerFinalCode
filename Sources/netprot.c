@@ -44,22 +44,12 @@ static int netprot_sock_connected(SOCKET s) {
 	}
 }
 
-/* Function to check a response for an error condition. */
-static int netprot_response_check(char resp[], int resplen) {
-	if (resp) {
-		return (resp[0]=='+') ? (0):(-1);
-	} else {
-		return -1;
-	}
-}
-
 int netprot_hello(SOCKET *s, struct sockaddr *server_sockaddr, int timeout) {
 	int err;
 	char tosend[NETPROT_HELLO_SIZE];
 	char uid_str[UID_STR_LEN];
-	char torecv[NETPROT_RESPONSE_SIZE];
 	int starttime, timeout_ticks;
-	int connected = 0, recvcount=0;
+	int connected = 0;
 	
 	/* Get UID string */
 	UID_tostr(uid_str, (sizeof(uid_str)/sizeof(char)));
@@ -98,30 +88,7 @@ int netprot_hello(SOCKET *s, struct sockaddr *server_sockaddr, int timeout) {
 	err = send(*s, tosend, strlen(tosend), 0); /*No flags */
 	NETPROT_SOCKET_ERROR_CHECK(err);
 	
-#if NETPROT_HELLO_OK
-	/* Get "+OK" back */
-	starttime = fnet_timer_ticks();
-	timeout_ticks = fnet_timer_ms2ticks(timeout); /*TODO: Remove magic number */
-	/* Poll until timeout or OK */
-	while (recvcount==0) { 
-		/* Ensure we only read OK and no more */
-		recvcount = netprot_readline(*s, torecv, sizeof(torecv));/* Poll Socket */
-		if (fnet_timer_get_interval(starttime, fnet_timer_ticks()) > timeout_ticks) {
-					break;
-		}
-	}
-	
-	/* Check if +OK was received */
-	if (recvcount>0) {
-		err = netprot_response_check(torecv, recvcount);
-		if (err) { 
-			return NETPROT_ERR_REMOTE; /* Invalid Response */
-		}
-	}
-	else { /* No Response */
-		return NETPROT_ERR_REMOTE;
-	}
-#endif
+	/* +OK will come back, but just handle that with everything else */
 	
 	/* Success */
 	return NETPROT_OK;
@@ -219,7 +186,7 @@ int netprot_connect(SOCKET bcast_s, SOCKET *server_s) {
 		if(connect_error == NETPROT_OK) {
 			fnet_printf("HELL0: Server connection established \n");
 			/* Set socket nodelay option */
-			setsockopt(*server_s,  IPPROTO_TCP, TCP_NODELAY, &nodelay, sizeof(nodelay));
+			setsockopt(*server_s,  IPPROTO_TCP, TCP_NODELAY, (char *) &nodelay, sizeof(nodelay));
 			connected = 1; /* Connected */
 		}
 		else if(connect_error == NETPROT_ERR_REMOTE){

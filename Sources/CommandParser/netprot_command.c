@@ -8,7 +8,7 @@ int netprot_process_command(const netprot_command commands[], const char *in, ch
 	netprot_command cmd;
 	int cmdlen;
 	int diff = 0;
-	int retval;
+	int retval = 0;
 	const char *cmdin;
 
 	/* Check Input Parameters */
