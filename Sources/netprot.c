@@ -168,7 +168,6 @@ int netprot_get_commands(SOCKET s) {
 	}
 	else if (recvcount==SOCKET_ERROR) {
 		fnet_printf("Server Disconnected \n");
-		netprot_goodbye(&s);
 		return -1; /* Disconnected */
 	}
 	
