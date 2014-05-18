@@ -68,7 +68,7 @@ void pwm_start(void) {
 
 void pwm_stop(void) {
 	/* Stop module clock */
-	FTM0_SC |= FTM_SC_CLKS(0);
+	FTM0_SC &= ~FTM_SC_CLKS(3);
 }
 
 void pwm_set(int freq, int width) {
