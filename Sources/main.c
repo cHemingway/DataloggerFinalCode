@@ -1,13 +1,9 @@
 #include "derivative.h" /* include peripheral declarations */
-
 #include "fnet.h" /* FNET stack */
-
 #include <string.h> /* for STRLEN */
-
 
 /* Include configuration file */
 #include "config.h"
-
 /* Our own headers */
 #include "init.h"
 #include "bcast.h"
@@ -17,7 +13,6 @@
 #include "sevenseg.h"
 #include "capture.h"
 #include "trigger.h"
-
 
 
 #if CONFIG_TEST_HW
@@ -34,7 +29,6 @@ int main(void) {
 	
 	/* Setup Hardware */
 	init_hw();
-	
 	
 /* Test SPI and PWM */
 #if CONFIG_TEST_HW
@@ -94,9 +88,8 @@ int main(void) {
 	
 	sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
 
-	/* Main Loop */
+	/* MAIN LOOP */
 	while (1) {
-		
 		/* CONNECT IF NEEDED */
 		if(!connected) {
 			connected = netprot_connect(bcast_s, &server_s);
@@ -139,12 +132,9 @@ int main(void) {
 					continue;
 				}
 			}
-			
-
-			
 		}
-		
 	}
+	/* END OF MAIN LOOP */
 	
 	/* Should never end up here */
 	return 0;
