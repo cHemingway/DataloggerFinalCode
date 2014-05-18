@@ -93,6 +93,11 @@ int main(void) {
 		/* CONNECT IF NEEDED */
 		if(!connected) {
 			connected = netprot_connect(bcast_s, &server_s);
+			#if CONFIG_BOARD == CONFIG_BOARD_PWM
+				if(connected) {
+					sevenseg_set("8888",DP_0); /* Change the screen, this will do for now */
+				}
+			#endif	
 			fnet_poll_services(); /* Poll DHCP while unconnected */
 		}
 		
