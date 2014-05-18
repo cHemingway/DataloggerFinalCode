@@ -119,7 +119,7 @@ int main(void) {
 			}
 			
 			/* Send data first if we are a capture type board */
-			#ifdef CONFIG_CAPTURE_SUPPORT
+			#if CONFIG_CAPTURE_SUPPORT
 				sent = netprot_send_capture(server_s);
 				if (sent<0) { /* Error - Disconnect */
 					disconnect = 1;
