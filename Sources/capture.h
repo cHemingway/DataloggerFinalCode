@@ -13,4 +13,7 @@ void capture_isr(void);
 /* Function to read capture buffer if full */
 int capture_read(struct netstruct **buf);
 
+/* Function sets the capture buffer to empty */
+void capture_set_empty(void);
+
 #endif /* CAPTURE_LOOP_H_ */
