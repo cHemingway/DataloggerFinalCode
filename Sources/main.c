@@ -110,9 +110,13 @@ int main(void) {
 			/* Check for disconnection */
 			if (disconnect) {
 				disconnect = 0; /* Reset */
-				//trigger_isr_stop();
 				netprot_goodbye(&server_s);
 				sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
+				/* Stop what you are doing */
+				#if CONFIG_BOARD == CONFIG_BOARD_ADC
+					trigger_isr_stop();
+					capture_set_empty();
+				#endif
 				fnet_printf("Server Disconnected \n");
 				connected = 0;
 				continue;
