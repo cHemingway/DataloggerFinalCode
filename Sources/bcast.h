@@ -44,5 +44,14 @@ int bcast_parse_broadcast(const char bcast_buf[], int bcast_buf_len, struct sock
  */
 int bcast_check_broadcast(SOCKET s, struct sockaddr *out, int default_port);
 
+/* NAME: bcast_flush
+ * DESCRIPTION: repeatedly reads from bcast_s to empty buffers, prevents reconnection to dead server 
+ * PARAMS:
+ * 		SOCKET s:				The socket to flush
+ * RETURNS:
+ * 		void					Nothing
+ */
+void bcast_flush(SOCKET s);
+
 /* __BCAST_H__ */
 #endif

@@ -104,6 +104,8 @@ int main(void) {
 			if (disconnect) {
 				disconnect = 0; /* Reset */
 				netprot_goodbye(&server_s);
+				/* Flush UDP port to prevent reconnecting to dead server */
+				bcast_flush(bcast_s);
 				sevenseg_set(CONFIG_7SEG_DEFAULT,DP_3); /* Third dot = waiting for UDP */
 				/* Stop what you are doing */
 				#if CONFIG_BOARD == CONFIG_BOARD_ADC

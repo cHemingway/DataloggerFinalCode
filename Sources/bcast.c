@@ -167,3 +167,8 @@ int bcast_check_broadcast(SOCKET s, struct sockaddr *out, int default_port) {
 	/*Success! Return 1 */
 	return 1;
 }
+
+void bcast_flush(SOCKET s) {
+	char buf[100];
+	while(recv(s,buf,100,0) > 0);
+}
