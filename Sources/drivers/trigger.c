@@ -69,7 +69,5 @@ void trigger_isr_stop(void) {
 	TRIGGER_PCR &= ~PORT_PCR_MUX_MASK;
 	/* Clear Pending ISR */
 	NVIC_ICPR(TRIGGER_ISR_BITREG) |= 1 << (TRIGGER_ISR_IRQ%32); 
-	/* Unset ISR */
-	NVIC_ICER(TRIGGER_ISR_BITREG) |= 1 << (TRIGGER_ISR_IRQ%32);
 }
 
