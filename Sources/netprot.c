@@ -146,14 +146,21 @@ int netprot_get_commands(SOCKET s) {
 				command = strtok(NULL, "\r\n");
 			}
 			
-			/* Update Display if ADC board */
+			/* Update Display and decimation if ADC board */
 			#if CONFIG_BOARD == CONFIG_BOARD_ADC
 			{
-				netprot_param *segname;
+				netprot_param *segname, *m;
+				/* Update display */
 				netprot_find_object_attr("CHANNEL","NAME", &segname);
 				sevenseg_set(segname->strval,0);
+				/* Update decimation */
+				netprot_find_object_attr("CHANNEL","M", &m);
+				if(m->intval!=1) {
+					capture_set_decimation(m->intval);
+				}
 			}
 			#endif
+			
 			
 			/* Update PWM if PWM board */
 			#if CONFIG_BOARD == CONFIG_BOARD_PWM

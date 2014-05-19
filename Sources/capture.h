@@ -16,4 +16,8 @@ int capture_read(struct netstruct **buf);
 /* Function sets the capture buffer to empty */
 void capture_set_empty(void);
 
+/* Function sets the decimation factor */
+/* NOTE: Any value but 1 is treated as 1000 now */
+void capture_set_decimation(int m);
+
 #endif /* CAPTURE_LOOP_H_ */

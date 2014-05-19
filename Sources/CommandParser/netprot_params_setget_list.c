@@ -2,6 +2,7 @@
 #include "config.h"
 #include <stddef.h>
 
+#if CONFIG_BOARD==CONFIG_BOARD_ADC
 /* List of "CHANNEL" object attributes */
 netprot_param channel_attrs[] = {
 	/* CHANNEL NAME */
@@ -14,9 +15,20 @@ netprot_param channel_attrs[] = {
 		0,			/* Default integer = 0 */
 		"",			/* Default value = empty */
 	},
+	/* CHANNEL M */
+	{
+		"M",		/* Name = "M" */
+		PARAM_INT,	/* Type = Integer */
+		0,			/* Flags = 0 */
+		1,			/* Default = 1, no decimation */
+		"",			/* String value is empty */
+		1,			/* Default = 1, no decimation */
+		"",			/* String value is empty */
+	},
 	/* TERMINATOR */
-	{"",0,0,0,"",0,""}
+	{"",0,0,0,"",0,""},
 };
+#endif
 
 /* List of "BOARD" object attributes */
 netprot_param board_attrs[] = {
