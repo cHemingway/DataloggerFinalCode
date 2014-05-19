@@ -33,9 +33,13 @@ volatile char buf_overflow = 0;
 /* Global for samples per buffer */
 int samples_per_buffer;
 
+/* Global for number of buffers to initially ignore */
+volatile int buffers_to_ignore = 0;
+
 /* Function to setup capture parameters */
-void capture_setup(int n) {
+void capture_setup(int n, int ignore_buffers) {
 	samples_per_buffer = n; /* Set samples per buffer */
+	buffers_to_ignore = ignore_buffers; /* Set number of buffers to ignore */
 	/* Reset values */
 	nsample = 0;
 	buf_full = 0;
@@ -51,27 +55,35 @@ void capture_isr(void) {
 	/* Increment n samples*/
 	nsample++;
 	/* Swap buffers on overflow */
-	if (nsample >= samples_per_buffer-1) {
-		if (cur_buf == buf0) { /* buf0 -> buf1 */
-			cur_buf = buf1;
-		}
-		else { 					/* buf1 -> buf0 */
-			cur_buf = buf0;
-		}
-		/* clear nsample */
-		nsample = 0;
-		/* Check if buffer was emptied in time (buf_full == 0) */
-		if (buf_full) buf_overflow = 1;
-		/* raise flag */
-		buf_full = 1;
+	if (nsample >= samples_per_buffer) {
+			if (cur_buf == buf0) { /* buf0 -> buf1 */
+				cur_buf = buf1;
+			}
+			else { 					/* buf1 -> buf0 */
+				cur_buf = buf0;
+			}
+			/* clear nsample */
+			nsample = 0;
+
+			/* Decrement buffers to ignore until 0*/
+			if (buffers_to_ignore) {
+				buffers_to_ignore--;
+			} 
+			else { /* If we are no longer ignoring, check for buffer overflow */
+				if (buf_full) buf_overflow = 1;
+			}
+			
+			/* raise flag */
+			buf_full = 1;
 	}
 }
 
-/* Get current hardware buffer to send */
-int capture_read(struct netstruct **buf) {
+/* Get current hardware buffer to send, if ignore_buffer >0 then ignore the value */
+int capture_read(struct netstruct **buf, int *ignore_buffer) {
 	if (buf_full) {
 		*buf = cur_buf;
 		buf_full = 0;
+		*ignore_buffer = buffers_to_ignore; /* Ignore */
 		return samples_per_buffer;
 	}
 	else {

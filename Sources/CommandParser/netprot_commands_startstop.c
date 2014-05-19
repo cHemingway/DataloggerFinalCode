@@ -14,17 +14,19 @@
 int netprot_cmd_start(const char *in, char *out, int outlen) {
 	/* Choose action based on board type */
 	#if CONFIG_BOARD == CONFIG_BOARD_ADC
+	netprot_param *capture_delay;
+	netprot_find_object_attr("CHANNEL","DELAY",&capture_delay);
 	/* Setup capture */
-	capture_setup(CONFIG_SAMPLES_PER_BUFFER);
+	capture_setup(CONFIG_SAMPLES_PER_BUFFER,capture_delay->intval);
 	
 	/* Start capture isr */
 	trigger_isr_start(capture_isr);
 	#elif CONFIG_BOARD == CONFIG_BOARD_PWM
 	{
-		netprot_param *capture_freq, *capture_width, *capture_delay;
-		netprot_find_object_attr("PWM","FREQ", &capture_freq);
-		netprot_find_object_attr("PWM","WIDTH",&capture_width);
-		netprot_find_object_attr("PWM","DELAY",&capture_delay);
+		netprot_param *pwm_freq, *pwm_width, *pwm_delay;
+		netprot_find_object_attr("PWM","FREQ", &pwm_freq);
+		netprot_find_object_attr("PWM","WIDTH",&pwm_width);
+		netprot_find_object_attr("PWM","DELAY",&pwm_delay);
 		pwm_set(capture_freq->intval, capture_width->intval);
 		/* Delay for specified number of milliseconds */
 		fnet_timer_delay(fnet_timer_ms2ticks(capture_delay->intval));

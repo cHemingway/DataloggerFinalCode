@@ -5,13 +5,13 @@
 #include "netprot_header.h"
 
 /* Function to setup capture parameters */
-void capture_setup(int n);
+void capture_setup(int n, int ignore_buffers);
 
 /* ISR to capture data */
 void capture_isr(void);
 
 /* Function to read capture buffer if full */
-int capture_read(struct netstruct **buf);
+int capture_read(struct netstruct **buf, int *ignore_buffer);
 
 /* Function sets the capture buffer to empty */
 void capture_set_empty(void);

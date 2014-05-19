@@ -14,6 +14,16 @@ netprot_param channel_attrs[] = {
 		0,			/* Default integer = 0 */
 		"",			/* Default value = empty */
 	},
+	/* CHANNEL DELAY */
+	{
+		"DELAY",					/* Name = "DELAY" */
+		PARAM_INT,					/* Type = "INT" */
+		0,							/* Flags = 0 */
+		CONFIG_IGNORE_NBUFFERS,		/* Integer value from config file */
+		"",							/* No string value */
+		CONFIG_IGNORE_NBUFFERS,		/* Integer value from config file */
+		"",							/* No string value */
+	},
 	/* TERMINATOR */
 	{"",0,0,0,"",0,""}
 };

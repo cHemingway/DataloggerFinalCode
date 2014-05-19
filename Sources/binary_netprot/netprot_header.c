@@ -26,7 +26,6 @@ int netprot_header_append(struct netstruct *toappend, int count,
 	toappend->ts_ns		 = 0;  
 
 	/* Set flags */
-	flags |= TS_INVALID; /* No timstamp support yet */
 	toappend->flags = (uint8_t)(flags & 0xff);
 
 	/* Set count */

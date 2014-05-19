@@ -8,6 +8,7 @@
 #include "UID.h"
 #include "sevenseg.h"
 #include "capture.h"
+#include "pwm.h"
 
 #include "fnet.h"
 #include <stdio.h>
@@ -215,12 +216,22 @@ int netprot_connect(SOCKET bcast_s, SOCKET *server_s) {
 int netprot_send_capture(SOCKET s) {
 	static int count = 0;
 	struct netstruct *buf;
-	int nsamples = capture_read(&buf);
+	int ignore_data;
+	char flags = 0;
+	int nsamples;
 	int n, sent=0, tosend;
 	
+	
+	nsamples = capture_read(&buf,&ignore_data);
 	if (nsamples) { /* We have data to send */
+		
+		/* Ignore the data if it is invalid */
+		if(ignore_data) {
+			flags |= DATA_INVALID;
+		}
+		
 		/* Append the header: TODO: ADD dt_ns */
-		netprot_header_append(buf, count++, nsamples * sizeof(uint16_t), 0, 0);
+		netprot_header_append(buf, count++, nsamples * sizeof(uint16_t), 0, flags);
 		/* Send the data */
 		tosend = netprot_header_getsize(buf);
 		while (tosend>0) { /* Loop until all data is sent */

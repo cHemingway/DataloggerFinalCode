@@ -46,6 +46,14 @@
 #define CONFIG_PWM_DELAY			(1000)
 #endif
 
+/* Set number of buffers for the ADC board to send blank data for before start.
+ * This ensures that TCP slow start has been passed before real logging begins, and hence boards are in sync.
+ * This can also be set by "SET CHANNEL DELAY".
+ */
+#ifndef CONFIG_IGNORE_NBUFFERS
+#define CONFIG_IGNORE_NBUFFERS		(20000)	/*100 seconds of delay */	
+#endif
+
 
 /* Timeout for connecting to server after a broadcast message in ms */
 #ifndef CONFIG_TIMEOUT
