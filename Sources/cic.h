@@ -28,7 +28,7 @@ typedef struct cic_decimate_instance_q32_t {
 	int nSample;		/*Current sample number */
 } cic_decimate_instance_q32;
 
-int cic_decimate_init_q32(cic_decimate_instance_q32 *S, uint16_t M, uint8_t N, uint8_t R, uint32_t blockSize);
+int cic_decimate_init_q32(cic_decimate_instance_q32 *S, uint16_t M, uint8_t N, uint8_t R, uint32_t G, uint32_t blockSize);
 
 void cic_decimate_q32(cic_decimate_instance_q32 *S, q32_t *pSrc, q32_t *pDst, uint32_t blockSize);
 /* CIC_H */

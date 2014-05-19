@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include <string.h>
 
-int cic_decimate_init_q32(cic_decimate_instance_q32 *S, uint16_t M, uint8_t N, uint8_t R, uint32_t blockSize)
+int cic_decimate_init_q32(cic_decimate_instance_q32 *S, uint16_t M, uint8_t N, uint8_t R, uint32_t G, uint32_t blockSize)
 {
 	if(S==NULL) { /* Check for null pointers */
 		return -1;
@@ -24,6 +24,7 @@ int cic_decimate_init_q32(cic_decimate_instance_q32 *S, uint16_t M, uint8_t N, u
 	S->M = M;
 	S->N = N;
 	S->R = R;
+	S->G = G;
 	S->nSample = 0;
 	return 0; /* Success */
 }
@@ -33,6 +34,7 @@ void cic_decimate_q32(cic_decimate_instance_q32 *S, q32_t *pSrc, q32_t *pDst, ui
 	int i = 0, j = 0, k = 0;
 	uint16_t M = 	S->M; 			/*Decimation Factor */
 	uint8_t	 R = 	S->R;			/*Differential delay scale in comb */
+	uint32_t G = 	S->G;			/* DC Gain */
 	uint8_t	 nStages = 	S->N;		/*Number of stages */
 	int nSample = S->nSample;
 
@@ -63,7 +65,7 @@ void cic_decimate_q32(cic_decimate_instance_q32 *S, q32_t *pSrc, q32_t *pDst, ui
 			}
 
 			/* Output */
-			pDst[j++] = S->combs[R][nStages];
+			pDst[j++] = S->combs[R][nStages] / G;
 			nSample = 0;
 
 			/* Copy back delays */
