@@ -1,3 +1,5 @@
+#include "fnet.h" /* For Delay */
+
 #include "config.h"
 
 #include "netprot_commands_startstop.h"
@@ -19,10 +21,13 @@ int netprot_cmd_start(const char *in, char *out, int outlen) {
 	trigger_isr_start(capture_isr);
 	#elif CONFIG_BOARD == CONFIG_BOARD_PWM
 	{
-		netprot_param *capture_freq, *capture_width;
+		netprot_param *capture_freq, *capture_width, *capture_delay;
 		netprot_find_object_attr("PWM","FREQ", &capture_freq);
 		netprot_find_object_attr("PWM","WIDTH",&capture_width);
+		netprot_find_object_attr("PWM","DELAY",&capture_delay);
 		pwm_set(capture_freq->intval, capture_width->intval);
+		/* Delay for specified number of milliseconds */
+		fnet_timer_delay(fnet_timer_ms2ticks(capture_delay->intval));
 		pwm_start();
 	}
 	#else

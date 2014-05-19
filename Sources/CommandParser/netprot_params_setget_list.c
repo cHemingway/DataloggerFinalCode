@@ -57,6 +57,16 @@ netprot_param pwm_attrs[] = {
 		3000,				/* 3us */
 		"",					/* No string value */
 	},
+	/* PWM DELAY */
+	{
+		"DELAY",			/* Name = "DELAY" */
+		PARAM_INT,			/* Type = Integer */
+		0,					/* Flags = 0 */
+		CONFIG_PWM_DELAY,	/* From config file */
+		"",					/* No string value */
+		CONFIG_PWM_DELAY,	/* From config file */
+		"",					/* No string value */
+	},
 	
 	/* TERMINATOR */
 	{"",0,0,0,"",0,""}

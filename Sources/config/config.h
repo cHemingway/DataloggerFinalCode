@@ -39,6 +39,13 @@
 #define CONFIG_NODELAY				(1)
 #endif
 
+/* Set delay in ms for PWM board to wait after start 
+ * This can also be set by "SET PWM DELAY"
+ */
+#ifndef CONFIG_PWM_DELAY
+#define CONFIG_PWM_DELAY			(1000)
+#endif
+
 
 /* Timeout for connecting to server after a broadcast message in ms */
 #ifndef CONFIG_TIMEOUT
