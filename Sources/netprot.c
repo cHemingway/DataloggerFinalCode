@@ -161,7 +161,6 @@ int netprot_get_commands(SOCKET s) {
 			}
 			#endif
 			
-			
 			/* Update PWM if PWM board */
 			#if CONFIG_BOARD == CONFIG_BOARD_PWM
 			{
@@ -222,9 +221,15 @@ int netprot_connect(SOCKET bcast_s, SOCKET *server_s) {
 int netprot_send_capture(SOCKET s) {
 	static int count = 0;
 	struct netstruct *buf;
-	int nsamples = capture_read(&buf);
+	int nsamples = 0;
 	int n, sent=0, tosend;
 	
+	if (1==capture_get_decimation()) { /* No Decimation */
+		nsamples = capture_read(&buf); 
+	}
+	else {
+		nsamples = capture_read_decimate(&buf);
+	}
 	if (nsamples) { /* We have data to send */
 		/* Append the header: TODO: ADD dt_ns */
 		netprot_header_append(buf, count++, nsamples * sizeof(uint16_t), 0, 0);

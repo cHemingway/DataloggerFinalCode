@@ -9,7 +9,7 @@
 #include <stddef.h>
 
 /* Maximum number of samples to store */
-#define MAX_SAMPLES (2000)
+#define MAX_SAMPLES (1000)
 /* Size of the buffers to store data in */
 #define BUFFER_SIZE (MAX_SAMPLES * sizeof(uint16_t)) + NETSTRUCT_LEN
 /* Alignment boundary */
@@ -48,9 +48,9 @@ cic_decimate_instance_q32 filter1;
 cic_decimate_instance_q32 filter2;
 
 /* Decimate intermediate buffers */
-q32 filter1_input[BUFFER_SIZE];
-q32 filter2_input[BUFFER_SIZE];
-q32 filter2_output[BUFFER_SIZE];
+q32_t filter1_input[MAX_SAMPLES];
+q32_t filter2_input[MAX_SAMPLES/125];
+q32_t filter2_output[MAX_SAMPLES/8];
 
 /* Function to setup capture parameters */
 void capture_setup(int n) {
@@ -104,9 +104,49 @@ void capture_set_empty(void) {
 }
 
 void capture_set_decimation(int m) {
-	decimation_factor = m;
+	if (m != 1) {
+		decimation_factor = 1000; /* Hardcoded for now */
+	}
 	
 	/* Setup filters, hardcoded for now. See block diagram for values */
-	cic_decimate_init_q32(&filter_1, 125, 2, 2, 62500);
-	cic_decimate_init_q32(&filter_2, 8, 3, 2, 4096);
+	cic_decimate_init_q32(&filter1, 125, 2, 2, 62500, samples_per_buffer);
+	cic_decimate_init_q32(&filter2, 8, 3, 2, 4096, samples_per_buffer/125);
+}
+
+int capture_get_decimation(void) {
+	return decimation_factor;
+}
+
+int capture_read_decimate(struct netstruct **buf) {
+	int i, samples_read = 0, total_read = 0, total_output = 0;
+	struct netstruct *read_buf = NULL;
+	uint16_t *output = (*buf)->data;
+	
+	while(total_output < samples_per_buffer) {
+		/* Get samples from input buffer */
+		while(samples_read==0) {
+			samples_read = capture_read(&read_buf);
+		}
+		
+		/* Expand to 32 bit */
+		for (i=0; i<samples_per_buffer; i++) {
+			filter1_input[i] = read_buf->data[i];
+		}
+		
+		/* Decimate with filter 1 */
+		cic_decimate_q32(&filter1, filter1_input, filter2_input, samples_read);
+		
+		/* Decimate with filter 2 */
+		cic_decimate_q32(&filter2, filter1_input, filter2_output, samples_read / 125);
+		
+		/* Contract and add to output, NOTE: presumes samples_per_buffer < M */
+		total_read += samples_read;
+		if (total_read > decimation_factor) {
+			*output++ = filter2_output[0]; /* Very hacky, should be a loop */
+			total_read = 0;
+			total_output++;
+		}
+	}
+	
+	return total_output;
 }

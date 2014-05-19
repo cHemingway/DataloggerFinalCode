@@ -20,4 +20,10 @@ void capture_set_empty(void);
 /* NOTE: Any value but 1 is treated as 1000 now */
 void capture_set_decimation(int m);
 
+/* Function gets the decimation factor */
+int capture_get_decimation(void);
+
+/* Function continuously reads capture buffer and decimates until it has enough values to send */
+int capture_read_decimate(struct netstruct **buf);
+
 #endif /* CAPTURE_LOOP_H_ */
